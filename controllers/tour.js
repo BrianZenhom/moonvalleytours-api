@@ -60,8 +60,8 @@ export const getAllTour = async (req, res, next) => {
   try {
     const { min, max, limit, cancellation, featured } = req.query
     const tours = await Tour.find({
-      cancellation: cancellation || true,
       price: { $gte: min | 1, $lte: max || 999 },
+      featured: featured || true,
     }).limit(limit)
     res.status(200).json(tours)
   } catch (err) {
@@ -70,8 +70,12 @@ export const getAllTour = async (req, res, next) => {
 }
 
 export const getToursInCity = async (req, res, next) => {
+  const { cancellation } = req.query
   try {
-    const tours = await Tour.find({ city: req.params.city })
+    const tours = await Tour.find({
+      city: req.params.city,
+      cancellation: cancellation || true,
+    })
     res.status(200).json(tours)
   } catch (err) {
     next(err)
