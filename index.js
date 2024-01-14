@@ -47,7 +47,7 @@ app.use((err, req, res, next) => {
   })
 })
 
-const PORT = 8080 || process.env.PORT
+const PORT = 1234 || process.env.PORT
 
 app.listen(PORT, () => {
   connect()

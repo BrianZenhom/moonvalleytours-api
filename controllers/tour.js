@@ -57,12 +57,10 @@ export const deleteTour = async (req, res, next) => {
   }
 }
 export const getAllTour = async (req, res, next) => {
+  // const { min, max, limit, cancellation, featured } = req.query
+
   try {
-    const { min, max, limit, cancellation, featured } = req.query
-    const tours = await Tour.find({
-      price: { $gte: min | 1, $lte: max || 999 },
-      featured: featured || true,
-    }).limit(limit)
+    const tours = await Tour.find()
     res.status(200).json(tours)
   } catch (err) {
     next(err)
@@ -70,12 +68,13 @@ export const getAllTour = async (req, res, next) => {
 }
 
 export const getToursInCity = async (req, res, next) => {
-  const { cancellation } = req.query
+  // const { cancellation } = req.query
+  // {
+  //     city: req.params.city,
+  //     cancellation: cancellation || true,
+  //   }
   try {
-    const tours = await Tour.find({
-      city: req.params.city,
-      cancellation: cancellation || true,
-    })
+    const tours = await Tour.find({ city: req.params.city })
     res.status(200).json(tours)
   } catch (err) {
     next(err)
