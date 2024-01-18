@@ -12,7 +12,6 @@ const TourSchema = new mongoose.Schema(
     language: { type: String },
     included: { type: [String] },
     notIncluded: { type: [String] },
-    accessibility: { type: Boolean, default: false },
     cancellation: { type: Boolean, default: false },
     ratingsAverage: { type: Number, default: 0, min: 0, max: 5 },
     ratingsQuantity: { type: Number, default: 0 },
