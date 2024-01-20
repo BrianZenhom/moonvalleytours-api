@@ -11,8 +11,13 @@ export const createCountry = async (req, res, next) => {
   }
 }
 export const getCountry = async (req, res) => {
+  const query = req.query.q
+
   try {
-    const country = await Countries.findOne({ country: req.params.country })
+    const country = await Countries.findOne({
+      country: req.params.country,
+      query,
+    })
     res.status(200).json(country)
   } catch (err) {
     next(err)

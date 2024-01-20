@@ -62,9 +62,12 @@ export const deleteCity = async (req, res, next) => {
   }
 }
 export const getAllCity = async (req, res, next) => {
+  const limit = req.query.limit
+  const page = req.query.page || 5
   try {
-    const limit = req.query.limit
-    const cities = await City.find().limit(limit)
+    const cities = await City.find()
+      .limit(limit)
+      .skip(limit * (page - 1))
     res.status(200).json(cities)
   } catch (err) {
     next(err)
