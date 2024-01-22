@@ -62,13 +62,18 @@ export const deleteCity = async (req, res, next) => {
   }
 }
 export const getAllCity = async (req, res, next) => {
-  const limit = req.query.limit
-  const page = req.query.page || 5
+  const regex = new RegExp(req.query.q, 'i')
+  const page = req.query.page
+  const ITEM_PER_PAGE = 5
+
   try {
-    const cities = await City.find()
-      .limit(limit)
-      .skip(limit * (page - 1))
-    res.status(200).json(cities)
+    const count = await City.find({ city: { $regex: regex } }).count()
+    const cities = await City.find({ city: { $regex: regex } })
+      .limit(ITEM_PER_PAGE)
+      .skip(ITEM_PER_PAGE * (page - 1))
+      .lean()
+
+    res.status(200).json({ count, cities })
   } catch (err) {
     next(err)
   }
