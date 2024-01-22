@@ -41,13 +41,16 @@ export const updateTour = async (req, res, next) => {
   }
 }
 export const deleteTour = async (req, res, next) => {
-  const cityId = req.params.cityid
+  const city = req.params.city
   try {
     await Tour.findByIdAndDelete(req.params.id)
     try {
-      await City.findByIdAndUpdate(cityId, {
-        $pull: { tours: req.params.id },
-      })
+      await City.findOneAndUpdate(
+        { city: city },
+        {
+          $pull: { tours: req.params.id },
+        }
+      )
     } catch (err) {
       next(err)
     }
@@ -58,10 +61,17 @@ export const deleteTour = async (req, res, next) => {
 }
 export const getAllTour = async (req, res, next) => {
   // const { min, max, limit, cancellation, featured } = req.query
+  const regex = new RegExp(req.query.q, 'i')
+  const page = req.query.page
+  const ITEM_PER_PAGE = 5
 
   try {
-    const tours = await Tour.find()
-    res.status(200).json(tours)
+    const count = await Tour.find({ title: { $regex: regex } }).count()
+    const tours = await Tour.find({ title: { $regex: regex } })
+      .limit(ITEM_PER_PAGE)
+      .skip(ITEM_PER_PAGE * (page - 1))
+      .lean()
+    res.status(200).json({ count, tours })
   } catch (err) {
     next(err)
   }

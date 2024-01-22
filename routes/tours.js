@@ -14,7 +14,7 @@ const router = express.Router()
 router.post('/:cityid', verifyAdmin, createTour)
 router.get('/in/:city', getToursInCity)
 router.put('/:id', verifyAdmin, updateTour)
-router.delete('/:id/:cityid', verifyAdmin, deleteTour)
+router.delete('/:id/:city', verifyAdmin, deleteTour)
 router.get('/:id', getTour)
 
 router.get('/', getAllTour)

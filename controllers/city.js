@@ -82,6 +82,7 @@ export const getAllCity = async (req, res, next) => {
 export const getCitiesInCountry = async (req, res, next) => {
   try {
     const cities = await City.find({ country: req.params.country })
+    console.log(cities)
     res.status(200).json(cities)
   } catch (err) {
     next(err)
