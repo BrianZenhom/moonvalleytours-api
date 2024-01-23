@@ -11,7 +11,7 @@ import { verifyAdmin } from '../utils/verifyToken.js'
 
 const router = express.Router()
 
-router.post('/:cityid', verifyAdmin, createTour)
+router.post('/:city', verifyAdmin, createTour)
 router.get('/in/:city', getToursInCity)
 router.put('/:id', verifyAdmin, updateTour)
 router.delete('/:id/:city', verifyAdmin, deleteTour)

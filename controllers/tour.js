@@ -3,13 +3,16 @@ import City from '../models/City.js'
 import { createError } from '../utils/error.js'
 
 export const createTour = async (req, res, next) => {
-  const cityId = req.params.cityid
+  const city = req.params.city
   const newTour = new Tour(req.body)
 
   try {
     const savedTour = await newTour.save()
     try {
-      await City.findByIdAndUpdate(cityId, { $push: { tours: savedTour._id } })
+      await City.findOneAndUpdate(
+        { city: city },
+        { $push: { tours: savedTour._id } }
+      )
     } catch (err) {
       next(err)
     }
