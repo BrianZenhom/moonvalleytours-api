@@ -26,8 +26,11 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
+    if (!req.body.email || !req.body.password)
+      return next(createError(400, 'Please provide email and password'))
+
     const user = await User.findOne({ email: req.body.email })
-    if (!user) return next(createError(404, 'Invalid email or password'))
+    if (!user) return next(createError(404, 'User not found!'))
 
     const passwordCorrect = await bcrypt.compare(
       req.body.password,
@@ -46,7 +49,7 @@ export const login = async (req, res, next) => {
     res
       .cookie('access_token', token, { httpOnly: true })
       .status(200)
-      .json({ ...otherDetails })
+      .json({ details: { ...otherDetails }, isAdmin })
   } catch (err) {
     next(err)
   }

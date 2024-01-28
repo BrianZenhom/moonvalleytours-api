@@ -46,8 +46,15 @@ export const deleteCountry = async (req, res) => {
   }
 }
 export const getAllCountries = async (req, res, next) => {
+  const regex = new RegExp(req.query.q, 'i')
+  const page = req.query.page
+  const ITEM_PER_PAGE = 5
+
   try {
-    const countries = await Countries.find()
+    const countries = await Countries.find({ country: { $regex: regex } })
+      .limit(ITEM_PER_PAGE)
+      .skip(ITEM_PER_PAGE * (page - 1))
+      .lean()
     res.status(200).json(countries)
   } catch (err) {
     next(err)

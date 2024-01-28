@@ -9,21 +9,10 @@ const UserSchema = new mongoose.Schema(
     phone: { type: Number },
     nationality: { type: String, required: true },
     isAdmin: { type: Boolean, default: false },
-    role: [
-      {
-        type: String,
-        enum: [
-          'Admin',
-          'Client',
-          'Tour Guide',
-          'Editor',
-          'Software Engineer',
-          'Manager',
-          'CEO & Founder',
-        ],
-        default: 'client',
-      },
-    ],
+    role: {
+      type: String,
+      default: 'client',
+    },
   },
   { timestamps: true }
 )
