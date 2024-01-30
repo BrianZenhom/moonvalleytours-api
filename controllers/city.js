@@ -1,6 +1,5 @@
 import City from '../models/City.js'
 import Country from '../models/Country.js'
-import { createError } from '../utils/error.js'
 
 export const createCity = async (req, res, next) => {
   const countryName = req.params.country
@@ -47,12 +46,16 @@ export const updateCity = async (req, res, next) => {
 }
 export const deleteCity = async (req, res, next) => {
   const country = req.params.country
+
   try {
-    await City.findOneAndDelete(req.params.city)
+    await City.findByIdAndDelete(req.params.cityId)
     try {
-      await Country.findOneAndUpdate(country, {
-        $pull: { cities: req.params.city },
-      })
+      await Country.findOneAndUpdate(
+        { country: country },
+        {
+          $pull: { cities: req.params.cityId },
+        }
+      )
     } catch (err) {
       next(err)
     }
