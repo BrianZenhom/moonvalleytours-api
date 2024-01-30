@@ -8,8 +8,8 @@ const CountrySchema = new mongoose.Schema(
     ratingsAverage: { type: Number, default: 0, min: 0, max: 5 },
     ratingsQuantity: { type: Number, default: 0 },
     travellers: { type: Number, default: 0, min: 0 },
-    countryCover: { String },
-    countryThumbnail: { String },
+    countryCover: { type: String },
+    countryThumbnail: { type: String },
   },
   { timestamps: true }
 )
