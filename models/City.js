@@ -8,8 +8,8 @@ const CitySchema = new mongoose.Schema(
     ratingsAverage: { type: Number, default: 5, min: 0, max: 5 },
     ratingsQuantity: { type: Number, default: 0 },
     travellers: { type: Number, default: 0, min: 0 },
-    CityCover: { String },
-    CityThumbnail: { String },
+    CityCover: { type: String },
+    CityThumbnail: { type: String },
     featured: { type: Boolean, default: false },
   },
   { timestamps: true }
