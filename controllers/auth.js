@@ -1,23 +1,22 @@
 import User from '../models/User.js'
-import bcrypt from 'bcryptjs'
 import { createError } from './../utils/error.js'
+import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
 export const register = async (req, res, next) => {
   try {
-    const salt = bcrypt.genSaltSync(10)
-    const hash = bcrypt.hashSync(req.body.password, salt)
-
     const newUser = new User({
       email: req.body.email,
-      password: hash,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm,
       name: req.body.name,
       surname: req.body.surname,
-      nationality: req.body.nationality,
       phone: req.body.phone,
+      nationality: req.body.nationality,
     })
 
     await newUser.save()
+
     res.status(201).send('User has been created.')
   } catch (err) {
     next(err)
