@@ -8,6 +8,7 @@ export const getUser = async (req, res, next) => {
     next(err)
   }
 }
+
 export const updateUser = async (req, res, next) => {
   try {
     const updatedUser = await Users.findByIdAndUpdate(
@@ -22,6 +23,7 @@ export const updateUser = async (req, res, next) => {
     next(err)
   }
 }
+
 export const deleteUser = async (req, res, next) => {
   try {
     await Users.findByIdAndDelete(req.params.id)
@@ -30,6 +32,7 @@ export const deleteUser = async (req, res, next) => {
     next(err)
   }
 }
+
 export const getAllUsers = async (req, res, next) => {
   try {
     const users = await Users.find()
