@@ -17,7 +17,10 @@ const TourSchema = new mongoose.Schema(
     ratingsQuantity: { type: Number, default: 0 },
     travellers: { type: Number, default: 0, min: 0 },
     tourPhotos: { type: [String] },
-    tourThumbnail: { String },
+    tourThumbnail: {
+      type: String,
+      required: [true, 'A tour must have a thumbnail picture'],
+    },
     featured: { type: Boolean, default: false },
   },
   { timestamps: true }
