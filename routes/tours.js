@@ -7,16 +7,18 @@ import {
   getToursInCity,
   updateTour,
 } from '../controllers/tour.js'
-import { verifyAdmin } from '../utils/verifyToken.js'
+import { verifyAdmin, protect } from '../utils/verifyToken.js'
 
 const router = express.Router()
 
-router.post('/:city', verifyAdmin, createTour)
-router.get('/in/:city', getToursInCity)
-router.put('/:id', verifyAdmin, updateTour)
-router.delete('/:id/:city', verifyAdmin, deleteTour)
+// Client routes
+router.get('/', protect, getAllTour)
 router.get('/:id', getTour)
+router.get('/in/:city', getToursInCity)
 
-router.get('/', getAllTour)
+// Admin routes
+router.put('/:id', verifyAdmin, updateTour)
+router.post('/:city', verifyAdmin, createTour)
+router.delete('/:id/:city', verifyAdmin, deleteTour)
 
 export default router
