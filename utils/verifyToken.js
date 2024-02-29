@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import { promisify } from 'util'
 import { createError } from './error.js'
 
 export const verifyToken = (req, res, next) => {
@@ -32,4 +33,28 @@ export const verifyAdmin = (req, res, next) => {
       return next(createError(403, 'youre not authorized!'))
     }
   })
+}
+
+export const protect = async (req, res, next) => {
+  let token
+  try {
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith('Bearer')
+    ) {
+      token = req.headers.authorization.split(' ')[1]
+
+      if (!token) {
+        return next(createError(401, 'You are not authenticated!'))
+      }
+
+      // verify token still active
+      const decoded = await promisify(jwt.verify)(token, process.env.JWT)
+      console.log(decoded)
+
+      next()
+    }
+  } catch (err) {
+    console.log(err)
+  }
 }
