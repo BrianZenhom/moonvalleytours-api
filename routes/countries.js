@@ -10,11 +10,13 @@ import { verifyAdmin } from '../utils/verifyToken.js'
 
 const router = express.Router()
 
+// Client routes
+router.get('/', getAllCountries)
+router.get('/:country', getCountry)
+
+// Admin routes
 router.post('/', verifyAdmin, createCountry)
 router.put('/:id', verifyAdmin, updateCountry)
 router.delete('/:id', verifyAdmin, deleteCountry)
-router.get('/:country', getCountry)
-
-router.get('/', getAllCountries)
 
 export default router
