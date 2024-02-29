@@ -41,10 +41,17 @@ app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 
 app.use('/api/auth', authRoute)
-app.use('/api/countries', countriesRoute)
-app.use('/api/cities', citiesRoute)
-app.use('/api/tours', toursRoute)
 app.use('/api/users', usersRoute)
+app.use('/api/tours', toursRoute)
+app.use('/api/cities', citiesRoute)
+app.use('/api/countries', countriesRoute)
+
+app.all('*', (req, res, next) => {
+  res.status(404).json({
+    status: 'fail',
+    message: `Can't find ${req.originalUrl} on this server!`,
+  })
+})
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500
