@@ -1,7 +1,13 @@
+import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
 import { createError } from './../utils/error.js'
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+
+const signToken = id => {
+  return jwt.sign({ id }, process.env.JWT, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  })
+}
 
 export const register = async (req, res, next) => {
   try {
@@ -15,9 +21,15 @@ export const register = async (req, res, next) => {
       nationality: req.body.nationality,
     })
 
+    const token = signToken(newUser._id)
+
     await newUser.save()
 
-    res.status(201).send('User has been created.')
+    res.status(201).send({
+      status: 'User has been created.',
+      token,
+      data: { user: newUser },
+    })
   } catch (err) {
     next(err)
   }
@@ -28,23 +40,20 @@ export const login = async (req, res, next) => {
     if (!req.body.email || !req.body.password)
       return next(createError(400, 'Please provide email and password'))
 
-    const user = await User.findOne({ email: req.body.email })
+    const user = await User.findOne({ email: req.body.email }).select(
+      '+password'
+    )
     if (!user) return next(createError(404, 'User not found!'))
 
-    const passwordCorrect = await bcrypt.compare(
-      req.body.password,
-      user.password
+    if (
+      !user ||
+      !(await user.correctPassword(req.body.password, user.password))
     )
+      return next(createError(401, 'Invalid email or password!'))
 
-    if (!passwordCorrect)
-      return next(createError(400, 'Invalid email or password!'))
+    const token = signToken(user._id)
 
-    const token = jwt.sign(
-      { id: user._id, isAdmin: user.isAdmin },
-      process.env.JWT
-    )
-
-    const { password, isAdmin, ...otherDetails } = user._doc
+    const { isAdmin, ...otherDetails } = user._doc
     res
       .cookie('access_token', token, { httpOnly: true })
       .status(200)
