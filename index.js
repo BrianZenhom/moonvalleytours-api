@@ -8,6 +8,7 @@ import toursRoute from './routes/tours.js'
 import usersRoute from './routes/users.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import AppError from './utils/appError.js'
 
 const app = express()
 
@@ -47,14 +48,12 @@ app.use('/api/cities', citiesRoute)
 app.use('/api/countries', countriesRoute)
 
 app.all('*', (req, res, next) => {
-  const err = new Error(`Can't find ${req.originalUrl} on this server!`)
-  err.status = 'fail'
-  err.statusCode = 404
-
-  next(err)
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404))
 })
 
 app.use((err, req, res, next) => {
+  console.log(err.stack)
+
   err.statusCode = err.statusCode || 500
   err.status = err.status || 'error'
 
