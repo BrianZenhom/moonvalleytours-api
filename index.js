@@ -11,6 +11,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 import AppError from './utils/appError.js'
+import globalErrorHandler from './controllers/error.js'
 
 import 'dotenv/config'
 
@@ -55,17 +56,7 @@ app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404))
 })
 
-app.use((err, req, res, next) => {
-  console.log(err.stack)
-
-  err.statusCode = err.statusCode || 500
-  err.status = err.status || 'error'
-
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-  })
-})
+app.use(globalErrorHandler)
 
 const PORT = 1234 || process.env.PORT
 
