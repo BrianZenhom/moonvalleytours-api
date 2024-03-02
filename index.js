@@ -1,14 +1,18 @@
-import 'dotenv/config'
 import express from 'express'
 import mongoose from 'mongoose'
+
 import authRoute from './routes/auth.js'
 import citiesRoute from './routes/cities.js'
 import countriesRoute from './routes/countries.js'
 import toursRoute from './routes/tours.js'
 import usersRoute from './routes/users.js'
+
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+
 import AppError from './utils/appError.js'
+
+import 'dotenv/config'
 
 const app = express()
 
