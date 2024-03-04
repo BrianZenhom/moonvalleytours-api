@@ -1,6 +1,7 @@
 import Tour from '../models/Tour.js'
 import City from '../models/City.js'
 import { createError } from '../utils/error.js'
+import catchAsync from '../utils/catchAsync.js'
 
 export const createTour = async (req, res, next) => {
   const city = req.params.city
@@ -21,29 +22,23 @@ export const createTour = async (req, res, next) => {
     next(createError(err, 'Something went wrong'))
   }
 }
-export const getTour = async (req, res, next) => {
-  try {
-    const tour = await Tour.findById(req.params.id)
+export const getTour = catchAsync(async (req, res, next) => {
+  const tour = await Tour.findById(req.params.id)
 
-    res.status(200).json(tour)
-  } catch (err) {
-    next(err)
-  }
-}
-export const updateTour = async (req, res, next) => {
-  try {
-    const updatedTour = await Tour.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    )
-    res.status(200).json(updatedTour)
-  } catch (err) {
-    next(err)
-  }
-}
+  res.status(200).json(tour)
+})
+
+export const updateTour = catchAsync(async (req, res, next) => {
+  const updatedTour = await Tour.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: req.body,
+    },
+    { new: true }
+  )
+  res.status(200).json(updatedTour)
+})
+
 export const deleteTour = async (req, res, next) => {
   const city = req.params.city
   try {
@@ -63,28 +58,22 @@ export const deleteTour = async (req, res, next) => {
     next(err)
   }
 }
-export const getAllTour = async (req, res, next) => {
+
+export const getAllTour = catchAsync(async (req, res, next) => {
   const regex = new RegExp(req.query.q, 'i')
   const page = req.query.page
   const ITEM_PER_PAGE = 5
 
-  try {
-    const count = await Tour.find({ title: { $regex: regex } }).count()
-    const tours = await Tour.find({ title: { $regex: regex } })
-      .limit(ITEM_PER_PAGE)
-      .skip(ITEM_PER_PAGE * (page - 1))
-      .lean()
-    res.status(200).json({ count, tours })
-  } catch (err) {
-    next(err)
-  }
-}
+  const count = await Tour.find({ title: { $regex: regex } }).count()
+  const tours = await Tour.find({ title: { $regex: regex } })
+    .limit(ITEM_PER_PAGE)
+    .skip(ITEM_PER_PAGE * (page - 1))
+    .lean()
+  res.status(200).json({ count, tours })
+})
 
-export const getToursInCity = async (req, res, next) => {
-  try {
-    const tours = await Tour.find({ city: req.params.city })
-    res.status(200).json(tours)
-  } catch (err) {
-    next(err)
-  }
-}
+export const getToursInCity = catchAsync(async (req, res, next) => {
+  const tours = await Tour.find({ city: req.params.city })
+
+  res.status(200).json(tours)
+})
