@@ -22,6 +22,7 @@ export const createTour = async (req, res, next) => {
     next(createError(err, 'Something went wrong'))
   }
 }
+
 export const getTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.id)
 
