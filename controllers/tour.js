@@ -1,6 +1,5 @@
 import Tour from '../models/Tour.js'
 import City from '../models/City.js'
-import { createError } from '../utils/error.js'
 import catchAsync from '../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
 
@@ -9,6 +8,7 @@ export const createTour = catchAsync(async (req, res, next) => {
   const newTour = new Tour(req.body)
 
   const savedTour = await newTour.save()
+
   try {
     await City.findOneAndUpdate(
       { city: city },
