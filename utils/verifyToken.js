@@ -50,7 +50,6 @@ export const protect = async (req, res, next) => {
 
       // verify token still active
       const decoded = await promisify(jwt.verify)(token, process.env.JWT)
-      console.log(decoded)
 
       next()
     }
