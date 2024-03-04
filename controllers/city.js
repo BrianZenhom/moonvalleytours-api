@@ -11,7 +11,7 @@ export const createCity = async (req, res, next) => {
       await Country.findOneAndUpdate(
         { country: countryName },
         {
-          $push: { cities: savedCity.city },
+          $push: { cities: savedCity._id },
         }
       )
     } catch (err) {
