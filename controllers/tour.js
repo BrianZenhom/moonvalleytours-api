@@ -74,10 +74,12 @@ export const getAllTour = catchAsync(async (req, res, next) => {
   const ITEM_PER_PAGE = 5
 
   const count = await Tour.find({ title: { $regex: regex } }).count()
+
   const tours = await Tour.find({ title: { $regex: regex } })
     .limit(ITEM_PER_PAGE)
     .skip(ITEM_PER_PAGE * (page - 1))
     .lean()
+
   res.status(200).json({ count, tours })
 })
 
