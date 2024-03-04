@@ -5,7 +5,7 @@ const TourSchema = new mongoose.Schema(
     city: { type: String, required: true },
     country: { type: String, required: true },
     continent: { type: [String] },
-    title: { type: String, required: true },
+    title: { type: String, required: true, unique: true },
     price: { type: Number, required: true },
     desc: { type: String },
     duration: { type: String },
