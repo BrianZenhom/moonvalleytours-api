@@ -24,6 +24,7 @@ export const createTour = async (req, res, next) => {
 export const getTour = async (req, res, next) => {
   try {
     const tour = await Tour.findById(req.params.id)
+
     res.status(200).json(tour)
   } catch (err) {
     next(err)
@@ -63,7 +64,6 @@ export const deleteTour = async (req, res, next) => {
   }
 }
 export const getAllTour = async (req, res, next) => {
-  // const { min, max, limit, cancellation, featured } = req.query
   const regex = new RegExp(req.query.q, 'i')
   const page = req.query.page
   const ITEM_PER_PAGE = 5
@@ -81,11 +81,6 @@ export const getAllTour = async (req, res, next) => {
 }
 
 export const getToursInCity = async (req, res, next) => {
-  // const { cancellation } = req.query
-  // {
-  //     city: req.params.city,
-  //     cancellation: cancellation || true,
-  //   }
   try {
     const tours = await Tour.find({ city: req.params.city })
     res.status(200).json(tours)
