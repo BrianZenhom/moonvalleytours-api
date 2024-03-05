@@ -13,6 +13,13 @@ import cors from 'cors'
 import AppError from './utils/appError.js'
 import globalErrorHandler from './controllers/errorController.js'
 
+process.on('uncaughtException', err => {
+  console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...')
+  console.log(err.name, err.message)
+
+  process.exit(1)
+})
+
 import 'dotenv/config'
 
 const app = express()
@@ -60,7 +67,16 @@ app.use(globalErrorHandler)
 
 const PORT = 1234 || process.env.PORT
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   connect()
   console.log(`Listening to app on port http://localhost:${PORT}`)
+})
+
+process.on('unhandledRejection', err => {
+  console.log('UNHANDLER REJECTION!💥 Shutting down...')
+  console.log(err.name, err.message)
+
+  server.close(() => {
+    process.exit(1)
+  })
 })
