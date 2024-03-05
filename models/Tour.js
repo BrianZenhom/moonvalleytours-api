@@ -13,7 +13,7 @@ const TourSchema = new mongoose.Schema(
     included: { type: [String] },
     notIncluded: { type: [String] },
     cancellation: { type: Boolean, default: false },
-    ratingsAverage: { type: Number, default: 0, min: 0, max: 5 },
+    ratingsAverage: { type: Number, default: 5, min: 0, max: 5 },
     ratingsQuantity: { type: Number, default: 0 },
     travellers: { type: Number, default: 0, min: 0 },
     tourPhotos: { type: [String] },
