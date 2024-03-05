@@ -37,6 +37,7 @@ const TourSchema = new mongoose.Schema(
     priceDiscount: {
       type: Number,
       validate: {
+        // This only points to current doc on NEW doc creation
         validator: function (val) {
           return val < this.price
         },
@@ -45,7 +46,7 @@ const TourSchema = new mongoose.Schema(
     },
     desc: { type: String },
     duration: { type: String },
-    dificulty: {
+    difficulty: {
       type: String,
       required: [true, 'A tour must have a difficulty'],
       enum: {
