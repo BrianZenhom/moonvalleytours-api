@@ -30,7 +30,19 @@ const TourSchema = new mongoose.Schema(
         'A tour title must have more or equal than 10 characters',
       ],
     },
-    price: { type: Number, required: true },
+    price: {
+      type: Number,
+      required: [true, 'Price is required, please set a price for this tour'],
+    },
+    priceDiscount: {
+      type: Number,
+      validate: {
+        validator: function (val) {
+          return val < this.price
+        },
+        message: 'Discount price ({VALUE}) should be below the regular price',
+      },
+    },
     desc: { type: String },
     duration: { type: String },
     dificulty: {
