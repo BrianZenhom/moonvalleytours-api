@@ -36,7 +36,7 @@ export const updateTour = catchAsync(async (req, res, next) => {
     {
       $set: req.body,
     },
-    { new: true }
+    { new: true, runValidators: true }
   )
 
   if (!updatedTour) {
