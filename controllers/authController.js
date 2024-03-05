@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken'
-import User from '../models/User.js'
-import { createError } from './../utils/error.js'
-import bcrypt from 'bcryptjs'
+import User from '../models/userModel.js'
+import { createError } from '../utils/error.js'
 
 const signToken = id => {
   return jwt.sign({ id }, process.env.JWT, {

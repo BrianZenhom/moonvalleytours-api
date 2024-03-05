@@ -6,7 +6,7 @@ import {
   getTour,
   getToursInCity,
   updateTour,
-} from '../controllers/tour.js'
+} from '../controllers/tourController.js'
 import { verifyAdmin, protect } from '../utils/verifyToken.js'
 
 const router = express.Router()

@@ -4,7 +4,7 @@ import {
   deleteUser,
   getUser,
   getAllUsers,
-} from '../controllers/user.js'
+} from '../controllers/userController.js'
 import { verifyAdmin, verifyUser } from '../utils/verifyToken.js'
 
 const router = express.Router()

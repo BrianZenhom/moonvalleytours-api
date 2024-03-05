@@ -1,5 +1,5 @@
-import Tour from '../models/Tour.js'
-import City from '../models/City.js'
+import Tour from '../models/tourModel.js'
+import City from '../models/cityModel.js'
 import catchAsync from '../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
 

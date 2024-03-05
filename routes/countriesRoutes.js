@@ -5,7 +5,7 @@ import {
   getAllCountries,
   getCountry,
   updateCountry,
-} from '../controllers/country.js'
+} from '../controllers/countryController.js'
 import { verifyAdmin } from '../utils/verifyToken.js'
 
 const router = express.Router()

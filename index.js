@@ -1,17 +1,17 @@
 import express from 'express'
 import mongoose from 'mongoose'
 
-import authRoute from './routes/auth.js'
-import citiesRoute from './routes/cities.js'
-import countriesRoute from './routes/countries.js'
-import toursRoute from './routes/tours.js'
-import usersRoute from './routes/users.js'
+import authRoute from './routes/authRoutes.js'
+import citiesRoute from './routes/citiesRoutes.js'
+import countriesRoute from './routes/countriesRoutes.js'
+import toursRoute from './routes/toursRoutes.js'
+import usersRoute from './routes/usersRoutes.js'
 
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 import AppError from './utils/appError.js'
-import globalErrorHandler from './controllers/error.js'
+import globalErrorHandler from './controllers/errorController.js'
 
 import 'dotenv/config'
 

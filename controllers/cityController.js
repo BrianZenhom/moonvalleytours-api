@@ -1,5 +1,5 @@
-import City from '../models/City.js'
-import Country from '../models/Country.js'
+import City from '../models/cityModel.js'
+import Country from '../models/countryModel.js'
 
 export const createCity = async (req, res, next) => {
   const countryName = req.params.country

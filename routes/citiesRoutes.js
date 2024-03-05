@@ -6,7 +6,7 @@ import {
   getCitiesInCountry,
   getCity,
   updateCity,
-} from '../controllers/city.js'
+} from '../controllers/cityController.js'
 import { verifyAdmin } from '../utils/verifyToken.js'
 
 const router = express.Router()
