@@ -17,7 +17,7 @@ router.get('/:id', getTour)
 router.get('/in/:city', getToursInCity)
 
 // Admin routes
-router.put('/:id', verifyAdmin, updateTour)
+router.patch('/:id', verifyAdmin, updateTour)
 router.post('/:city', verifyAdmin, createTour)
 router.delete('/:id/:city', verifyAdmin, deleteTour)
 
