@@ -18,7 +18,7 @@ router.get('/in/:city', getToursInCity)
 
 // Admin routes
 router.patch('/:id', verifyAdmin, updateTour)
-router.post('/:city', verifyAdmin, createTour)
+router.post('/:city', protect, createTour)
 router.delete('/:id/:city', verifyAdmin, deleteTour)
 
 export default router
