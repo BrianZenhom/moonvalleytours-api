@@ -34,26 +34,3 @@ export const verifyAdmin = (req, res, next) => {
     }
   })
 }
-
-export const protect = async (req, res, next) => {
-  let token
-  try {
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith('Bearer')
-    ) {
-      token = req.headers.authorization.split(' ')[1]
-
-      if (!token) {
-        return next(createError(401, 'You are not authenticated!'))
-      }
-
-      // verify token still active
-      const decoded = await promisify(jwt.verify)(token, process.env.JWT)
-
-      next()
-    }
-  } catch (err) {
-    console.log(err)
-  }
-}
