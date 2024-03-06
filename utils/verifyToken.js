@@ -1,16 +1,16 @@
 import jwt from 'jsonwebtoken'
-import { promisify } from 'util'
-import { createError } from './error.js'
+import AppError from '../utils/appError.js'
 
 export const verifyToken = (req, res, next) => {
   const token = req.cookies.access_token
   if (!token) {
-    return next(createError(401, 'You are not authenticated!'))
+    return next(new AppError('You are not authenticated!', 401))
   }
 
   jwt.verify(token, process.env.JWT, (err, user) => {
-    if (err) return next(createError(403, 'Token isnt valid!'))
+    if (err) return next(new AppError('Token isnt valid!', 403))
     req.user = user
+
     next()
   })
 }
@@ -20,7 +20,7 @@ export const verifyUser = (req, res, next) => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
       next()
     } else {
-      return next(createError(403, 'youre not authorized!'))
+      return next(new AppError(`You are not authorized!`, 403))
     }
   })
 }
@@ -30,7 +30,7 @@ export const verifyAdmin = (req, res, next) => {
     if (req.user.isAdmin) {
       next()
     } else {
-      return next(createError(403, 'youre not authorized!'))
+      return next(new AppError(`You are not authorized!`, 403))
     }
   })
 }
