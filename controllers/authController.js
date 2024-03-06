@@ -2,7 +2,7 @@ import { promisify } from 'util'
 import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
 import catchAsync from './../utils/catchAsync.js'
-import { createError } from '../utils/error.js'
+import AppError from '../utils/appError.js'
 
 const signToken = id => {
   return jwt.sign({ id }, process.env.JWT, {
@@ -39,18 +39,18 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     if (!req.body.email || !req.body.password)
-      return next(createError(400, 'Please provide email and password'))
+      return next(new AppError('Please provide email and password', 400))
 
     const user = await User.findOne({ email: req.body.email }).select(
       '+password'
     )
-    if (!user) return next(createError(404, 'User not found!'))
+    if (!user) return next(new AppError('User not found!', 404))
 
     if (
       !user ||
       !(await user.correctPassword(req.body.password, user.password))
     )
-      return next(createError(401, 'Invalid email or password!'))
+      return next(new AppError('Invalid email or password!', 401))
 
     const token = signToken(user._id)
 
@@ -73,6 +73,8 @@ export const protect = catchAsync(async (req, res, next) => {
   ) {
     token = req.headers.authorization.split(' ')[1]
   }
+
+  console.log('Hello')
 
   if (!token) {
     return next(
