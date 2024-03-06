@@ -66,6 +66,7 @@ export const login = async (req, res, next) => {
 
 export const protect = catchAsync(async (req, res, next) => {
   let token
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
@@ -80,7 +81,6 @@ export const protect = catchAsync(async (req, res, next) => {
   }
 
   const decoded = await promisify(jwt.verify)(token, process.env.JWT)
-  console.log(decoded)
 
   next()
 })
