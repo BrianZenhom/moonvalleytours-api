@@ -16,6 +16,7 @@ export const register = async (req, res, next) => {
       email: req.body.email,
       password: req.body.password,
       passwordConfirm: req.body.passwordConfirm,
+      passwordChangedAt: req.body.passwordChangedAt,
       name: req.body.name,
       surname: req.body.surname,
       phone: req.body.phone,
@@ -58,7 +59,7 @@ export const login = async (req, res, next) => {
     res
       .cookie('access_token', token, { httpOnly: true })
       .status(200)
-      .json({ details: { ...otherDetails }, isAdmin })
+      .json({ details: { ...otherDetails }, token, isAdmin })
   } catch (err) {
     next(err)
   }
@@ -74,15 +75,24 @@ export const protect = catchAsync(async (req, res, next) => {
     token = req.headers.authorization.split(' ')[1]
   }
 
-  console.log('Hello')
-
   if (!token) {
     return next(
       new AppError('You are not logged in! Please log in to get access.', 401)
     )
   }
 
+  // 2 verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT)
+
+  // 3 check if user still exists
+  const freshUser = await User.findById(decoded.id)
+  if (!freshUser)
+    return next(
+      new AppError('User belonging to this token no longer exists.', 401)
+    )
+
+  // 4 check if user changed password after the token was issued
+  freshUser.changedPasswordAfter(decoded.iat)
 
   next()
 })
