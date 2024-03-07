@@ -1,5 +1,4 @@
 import express from 'express'
-import { verifyAdmin } from '../utils/verifyToken.js'
 import {
   getTour,
   createTour,
@@ -13,13 +12,13 @@ import { protect } from '../controllers/authController.js'
 const router = express.Router()
 
 // Client routes
-router.get('/', protect, getAllTour)
+router.get('/', getAllTour)
 router.get('/:id', getTour)
 router.get('/in/:city', getToursInCity)
 
 // Admin routes
 router.post('/:city', protect, createTour)
-router.patch('/:id', verifyAdmin, updateTour)
-router.delete('/:id/:city', verifyAdmin, deleteTour)
+router.patch('/:id', protect, updateTour)
+router.delete('/:id/:city', protect, deleteTour)
 
 export default router

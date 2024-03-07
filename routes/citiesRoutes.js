@@ -7,7 +7,7 @@ import {
   getCity,
   updateCity,
 } from '../controllers/cityController.js'
-import { verifyAdmin } from '../utils/verifyToken.js'
+import { protect } from '../controllers/authController.js'
 
 const router = express.Router()
 
@@ -17,8 +17,8 @@ router.get('/:city', getCity)
 router.get('/in/:country', getCitiesInCountry)
 
 // Admin routes
-router.put('/:id', verifyAdmin, updateCity)
-router.post('/:country', verifyAdmin, createCity)
-router.delete('/:cityId/:country', verifyAdmin, deleteCity)
+router.put('/:id', protect, updateCity)
+router.post('/:country', protect, createCity)
+router.delete('/:cityId/:country', protect, deleteCity)
 
 export default router
