@@ -13,7 +13,7 @@ import { protect } from '../controllers/authController.js'
 const router = express.Router()
 
 // Client routes
-router.get('/', getAllTour)
+router.get('/', protect, getAllTour)
 router.get('/:id', getTour)
 router.get('/in/:city', getToursInCity)
 
