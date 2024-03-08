@@ -6,7 +6,7 @@ import {
   getCountry,
   updateCountry,
 } from '../controllers/countryController.js'
-import { protect } from '../controllers/authController.js'
+import { protect, restrictTo } from '../controllers/authController.js'
 
 const router = express.Router()
 
@@ -15,8 +15,8 @@ router.get('/', getAllCountries)
 router.get('/:country', getCountry)
 
 // Admin routes
-router.post('/', protect, createCountry)
-router.put('/:id', protect, updateCountry)
-router.delete('/:id', protect, deleteCountry)
+router.post('/', protect, restrictTo('admin', 'lead-guide'), createCountry)
+router.put('/:id', protect, restrictTo('admin', 'lead-guide'), updateCountry)
+router.delete('/:id', protect, restrictTo('admin', 'lead-guide'), deleteCountry)
 
 export default router
