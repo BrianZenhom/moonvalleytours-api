@@ -5,6 +5,7 @@ import {
   getUser,
   getAllUsers,
 } from '../controllers/userController.js'
+import { protect, restrictTo } from '../controllers/authController.js'
 
 const router = express.Router()
 
@@ -14,6 +15,6 @@ router.put('/:id', updateUser)
 router.delete('/:id', deleteUser)
 
 // Admin routes
-router.get('/', getAllUsers)
+router.get('/', protect, restrictTo('admin', 'lead-guide'), getAllUsers)
 
 export default router
