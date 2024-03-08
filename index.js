@@ -53,11 +53,11 @@ app.use(cookieParser())
 app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 
-app.use('/api/auth', authRoute)
-app.use('/api/users', usersRoute)
-app.use('/api/tours', toursRoute)
-app.use('/api/cities', citiesRoute)
-app.use('/api/countries', countriesRoute)
+app.use('/api/v1/auth', authRoute)
+app.use('/api/v1/users', usersRoute)
+app.use('/api/v1/tours', toursRoute)
+app.use('/api/v1/cities', citiesRoute)
+app.use('/api/v1/countries', countriesRoute)
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404))

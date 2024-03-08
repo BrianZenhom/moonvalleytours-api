@@ -56,10 +56,10 @@ export const login = async (req, res, next) => {
     const token = signToken(user._id)
 
     const { isAdmin, ...otherDetails } = user._doc
-    res
-      .cookie('access_token', token, { httpOnly: true })
-      .status(200)
-      .json({ details: { ...otherDetails }, token, isAdmin })
+    res.status(200).json({
+      status: 'success',
+      token,
+    })
   } catch (err) {
     next(err)
   }
@@ -102,3 +102,14 @@ export const protect = catchAsync(async (req, res, next) => {
   req.user = currentUser
   next()
 })
+
+export const restrictTo = (...roles) => {
+  return (req, res, next) => {
+    // Roles ['admin', 'lead-guide'] role='user'
+    if (!roles.includes(req.user.role)) {
+      return next(new AppError('You do not have permission', 403))
+    }
+
+    next()
+  }
+}

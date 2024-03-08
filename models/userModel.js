@@ -37,7 +37,8 @@ const UserSchema = new mongoose.Schema(
     isAdmin: { type: Boolean, default: false },
     role: {
       type: String,
-      default: 'client',
+      enum: ['user', 'guide', 'lead-guide', 'admin'],
+      default: 'user',
     },
   },
   { timestamps: true }
