@@ -30,6 +30,8 @@ const UserSchema = new mongoose.Schema(
       },
     },
     passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
     photo: { type: String },
     name: { type: String, required: [true, 'Please tell us your name!'] },
     surname: { type: String, required: [true, 'Please tell us your surname'] },
@@ -80,6 +82,15 @@ UserSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
 
 UserSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex')
+
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex')
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000
+
+  return resetToken
 }
 
 export default mongoose.model('User', UserSchema)
