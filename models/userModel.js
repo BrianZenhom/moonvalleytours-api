@@ -1,3 +1,4 @@
+import crypto from 'node:crypto'
 import mongoose from 'mongoose'
 import validator from 'validator'
 import bcrypt from 'bcryptjs'
@@ -75,6 +76,10 @@ UserSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   }
 
   return false
+}
+
+UserSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString('hex')
 }
 
 export default mongoose.model('User', UserSchema)
