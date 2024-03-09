@@ -65,7 +65,7 @@ export const deleteTour = catchAsync(async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-  res.status(200).json('Tour deleted!')
+  res.status(204).json('Tour deleted!')
 })
 
 export const getAllTour = catchAsync(async (req, res, next) => {
