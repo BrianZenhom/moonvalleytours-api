@@ -12,60 +12,34 @@ const signToken = id => {
   })
 }
 
-export const register = async (req, res, next) => {
-  try {
-    const newUser = new User({
-      email: req.body.email,
-      password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm,
-      passwordChangedAt: req.body.passwordChangedAt,
-      name: req.body.name,
-      surname: req.body.surname,
-      phone: req.body.phone,
-      nationality: req.body.nationality,
-    })
+const createSendToken = (user, statusCode, res) => {
+  const token = signToken(user._id)
 
-    const token = signToken(newUser._id)
-
-    await newUser.save()
-
-    res.status(201).send({
-      status: 'User has been created.',
-      token,
-      data: { user: newUser },
-    })
-  } catch (err) {
-    next(err)
-  }
+  res.status(statusCode).json({
+    status: 'success',
+    token,
+    data: { user },
+  })
 }
 
-export const login = async (req, res, next) => {
-  try {
-    if (!req.body.email || !req.body.password)
-      return next(new AppError('Please provide email and password', 400))
+export const register = catchAsync(async (req, res, next) => {
+  const newUser = await User.create(req.body)
 
-    const user = await User.findOne({ email: req.body.email }).select(
-      '+password'
-    )
-    if (!user) return next(new AppError('User not found!', 404))
+  createSendToken(newUser, 201, res)
+})
 
-    if (
-      !user ||
-      !(await user.correctPassword(req.body.password, user.password))
-    )
-      return next(new AppError('Invalid email or password!', 401))
+export const login = catchAsync(async (req, res, next) => {
+  if (!req.body.email || !req.body.password)
+    return next(new AppError('Please provide email and password', 400))
 
-    const token = signToken(user._id)
+  const user = await User.findOne({ email: req.body.email }).select('+password')
+  if (!user) return next(new AppError('User not found!', 404))
 
-    const { isAdmin, ...otherDetails } = user._doc
-    res.status(200).json({
-      status: 'success',
-      token,
-    })
-  } catch (err) {
-    next(err)
-  }
-}
+  if (!user || !(await user.correctPassword(req.body.password, user.password)))
+    return next(new AppError('Invalid email or password!', 401))
+
+  createSendToken(user, 200, res)
+})
 
 export const protect = catchAsync(async (req, res, next) => {
   let token
@@ -183,11 +157,59 @@ export const resetPassword = catchAsync(async (req, res, next) => {
   // Update changedPasswordAt property for the user
 
   // Log the user in, send a JWT
-  const token = signToken(user._id)
+  createSendToken(user, 200, res)
+})
 
-  const { isAdmin, ...otherDetails } = user._doc
+export const updatePassword = catchAsync(async (req, res, next) => {
+  // Get user from db
+  const user = await User.findById(req.user.id).select('+password')
+
+  // Check if password is correct
+  if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+    return next(new AppError('Your current password is wrong.', 401))
+  }
+
+  // If its correct, update password
+  user.password = req.body.password
+  user.passwordConfirm = req.body.passwordConfirm
+
+  await user.save()
+  // Log user in, send JWT
+  createSendToken(user, 200, res)
+})
+
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {}
+  Object.keys(obj).forEach(el => {
+    if (allowedFields.includes(el)) newObj[el] = obj[el]
+  })
+  return newObj
+}
+
+export const updateMe = catchAsync(async (req, res, next) => {
+  // Create an error if an user tries to update password.
+  if (req.body.password || req.body.passwordConfirm)
+    return next(new AppError('Wrong route, use update my password', 400))
+
+  // filtered unwanted fields
+  const filteredBody = filterObj(
+    req.body,
+    'name',
+    'surname',
+    'email',
+    'nationality'
+  )
+
+  // Update user document
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true,
+    runValidators: true,
+  })
+
   res.status(200).json({
     status: 'success',
-    token,
+    data: {
+      user: updatedUser,
+    },
   })
 })

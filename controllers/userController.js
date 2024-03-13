@@ -1,4 +1,5 @@
 import Users from '../models/userModel.js'
+import AppError from '../utils/appError.js'
 
 export const getUser = async (req, res, next) => {
   try {
