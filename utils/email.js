@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer'
 
 const sendEmail = async options => {
   // Create a transporter
+  console.log(process.env.NOREPLYHOST)
   const transporter = nodemailer.createTransport({
     host: process.env.NOREPLYHOST,
     port: process.env.NOREPLYPORT,

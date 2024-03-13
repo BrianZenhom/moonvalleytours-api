@@ -1,3 +1,4 @@
+import crypto from 'node:crypto'
 import { promisify } from 'util'
 import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
@@ -132,17 +133,61 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
   )}/api/v1/auth/resetPassword/${resetToken}`
 
   const message = `Forgot your password? Create a new password here: ${resetURL}\nIf you didn't request a new password, please ignore this email.`
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Forgot password reset (valid for 10 min)',
+      message,
+    })
 
-  await sendEmail({
-    email: user.email,
-    subject: 'Forgot password reset (valid for 10 min)',
-    message,
-  })
+    res.status(200).json({
+      status: 'success',
+      message: 'New password was sent to your email',
+    })
+  } catch (err) {
+    user.passwordResetToken = undefined
+    user.passwordResetExpires = undefined
 
-  res.status(200).json({
-    status: 'success',
-    message: 'New password was sent to your email',
-  })
+    await user.save({ validateBeforeSave: false })
+
+    return next(
+      new AppError(`We've ran into an issue, please try again later.`),
+      500
+    )
+  }
 })
 
-export const resetPassword = (req, res, next) => {}
+export const resetPassword = catchAsync(async (req, res, next) => {
+  // Get user based on the token
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex')
+
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  })
+
+  // If token has not expired, and theres a user, set the new password
+  if (!user) return next(new AppError('Url is invalid or has expired', 400))
+
+  user.password = req.body.password
+  user.passwordConfirm = req.body.passwordConfirm
+
+  user.passwordResetToken = undefined
+  user.passwordResetExpires = undefined
+
+  await user.save()
+
+  // Update changedPasswordAt property for the user
+
+  // Log the user in, send a JWT
+  const token = signToken(user._id)
+
+  const { isAdmin, ...otherDetails } = user._doc
+  res.status(200).json({
+    status: 'success',
+    token,
+  })
+})
