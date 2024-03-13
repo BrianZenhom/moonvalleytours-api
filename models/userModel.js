@@ -63,7 +63,8 @@ UserSchema.pre('save', async function (next) {
 UserSchema.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew) return next()
 
-  this.passwordChangedAt = Date.now()
+  // 1000 is a second in the past, to ensure the token is created after the password has been changed.
+  this.passwordChangedAt = Date.now() - 1000
   next()
 })
 
