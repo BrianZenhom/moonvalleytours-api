@@ -43,6 +43,11 @@ const UserSchema = new mongoose.Schema(
       enum: ['user', 'guide', 'lead-guide', 'admin'],
       default: 'user',
     },
+    active: {
+      type: Boolean,
+      default: true,
+      select: false,
+    },
   },
   { timestamps: true }
 )
@@ -65,6 +70,12 @@ UserSchema.pre('save', function (next) {
 
   // 1000 is a second in the past, to ensure the token is created after the password has been changed.
   this.passwordChangedAt = Date.now() - 1000
+  next()
+})
+
+UserSchema.pre(/^find/, function (next) {
+  // this points to the current query
+  this.find({ active: { $ne: false } })
   next()
 })
 
