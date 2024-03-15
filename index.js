@@ -1,5 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import rateLimit from 'express-rate-limit'
+import helmet from 'helmet'
 
 import authRoute from './routes/authRoutes.js'
 import citiesRoute from './routes/citiesRoutes.js'
@@ -37,7 +39,7 @@ mongoose.connection.on('disconnected', () => {
   console.log('mongo disconnected!')
 })
 
-// Middleware
+// Set cors
 app.use(
   cors({
     origin: [
@@ -49,9 +51,28 @@ app.use(
     credentials: true,
   })
 )
+
+// Set security http headers
+app.use(helmet())
+
+// Limit Request from same IP
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests, please try again later!',
+})
+app.use('/api', limiter)
+app.disable('x-powered-by')
+
+// Body parser
 app.use(cookieParser())
+
 app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ extended: true, limit: '50mb' }))
+
+// Data sanitization against NoSQL query injection
+
+// Data sanitization against XSS
 
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/users', usersRoute)
