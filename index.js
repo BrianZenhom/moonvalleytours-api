@@ -2,6 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
+import mongoSanitize from 'express-mongo-sanitize'
+import xss from 'xss-clean'
 
 import authRoute from './routes/authRoutes.js'
 import citiesRoute from './routes/citiesRoutes.js'
@@ -62,6 +64,7 @@ const limiter = rateLimit({
   message: 'Too many requests, please try again later!',
 })
 app.use('/api', limiter)
+
 app.disable('x-powered-by')
 
 // Body parser
@@ -71,8 +74,10 @@ app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 
 // Data sanitization against NoSQL query injection
+app.use(mongoSanitize())
 
 // Data sanitization against XSS
+app.use(xss())
 
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/users', usersRoute)
