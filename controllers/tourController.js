@@ -69,18 +69,26 @@ export const deleteTour = catchAsync(async (req, res, next) => {
 })
 
 export const getAllTour = catchAsync(async (req, res, next) => {
-  const regex = new RegExp(req.query.q, 'i')
-  const page = req.query.page
-  const ITEM_PER_PAGE = 5
+  // Build query
+  const queryObj = { ...req.query }
 
-  const count = await Tour.find({ title: { $regex: regex } }).count()
+  const excludedFields = ['page', 'sort', 'limit', 'fields']
+  excludedFields.forEach(el => delete queryObj[el])
 
-  const tours = await Tour.find({ title: { $regex: regex } })
-    .limit(ITEM_PER_PAGE)
-    .skip(ITEM_PER_PAGE * (page - 1))
-    .lean()
+  const query = Tour.find(queryObj)
 
-  res.status(200).json({ count, tours })
+  // const query = Tour.find().where('duration').equals(5).where('difficulty').equals('easy')
+
+  // Execute query
+  const tours = await query
+
+  res.status(200).json({
+    status: 'success',
+    count: tours.length,
+    data: {
+      tours,
+    },
+  })
 })
 
 export const getToursInCity = catchAsync(async (req, res, next) => {
