@@ -3,6 +3,14 @@ import City from '../models/cityModel.js'
 import catchAsync from '../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
 
+export const aliasTopTours = (req, res, next) => {
+  req.query.limit = '7'
+  req.query.sort = '-ratingsAverage,price'
+  req.query.fields =
+    'city, country, title, price, priceDiscount, difficulty, ratingsAverage, cancellation, tourThumbnail'
+  next()
+}
+
 export const createTour = catchAsync(async (req, res, next) => {
   const city = req.params.city
   const newTour = new Tour(req.body)
