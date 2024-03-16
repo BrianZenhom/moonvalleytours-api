@@ -6,6 +6,7 @@ import {
   updateTour,
   deleteTour,
   getToursInCity,
+  aliasTopTours,
 } from '../controllers/tourController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 
@@ -15,6 +16,7 @@ const router = express.Router()
 router.get('/', protect, getAllTour)
 router.get('/:id', getTour)
 router.get('/in/:city', getToursInCity)
+router.get('/top-7-cheapest', aliasTopTours, getAllTour)
 
 // Admin routes
 router.post('/:city', protect, restrictTo('admin', 'lead-guide'), createTour)
