@@ -5,7 +5,7 @@ import AppError from '../utils/appError.js'
 
 export const aliasTopTours = (req, res, next) => {
   req.query.limit = '7'
-  req.query.sort = '-ratingsAverage,price'
+  req.query.sort = 'price,-ratingsAverage'
   req.query.fields =
     'city, country, title, price, priceDiscount, difficulty, ratingsAverage, cancellation, tourThumbnail'
   next()
@@ -76,20 +76,42 @@ export const deleteTour = catchAsync(async (req, res, next) => {
   res.status(204).json('Tour deleted!')
 })
 
+class APIFeatures {
+  constructor(query, queryString) {
+    this.query = query
+    this.queryString = queryString
+  }
+
+  filter() {
+    const queryObj = { ...this.queryString }
+
+    // Filtering
+
+    const excludedFields = ['page', 'sort', 'limit', 'fields']
+    excludedFields.forEach(el => delete queryObj[el])
+
+    // Advanced filtering
+    let queryStr = JSON.stringify(queryObj)
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
+
+    this.query.find(JSON.parse(queryStr))
+  }
+}
+
 export const getAllTour = catchAsync(async (req, res, next) => {
   // Build query
-  const queryObj = { ...req.query }
+  // const queryObj = { ...req.query }
 
-  // Filtering
+  // // Filtering
 
-  const excludedFields = ['page', 'sort', 'limit', 'fields']
-  excludedFields.forEach(el => delete queryObj[el])
+  // const excludedFields = ['page', 'sort', 'limit', 'fields']
+  // excludedFields.forEach(el => delete queryObj[el])
 
-  // Advanced filtering
-  let queryStr = JSON.stringify(queryObj)
-  queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
+  // // Advanced filtering
+  // let queryStr = JSON.stringify(queryObj)
+  // queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
 
-  let query = Tour.find(JSON.parse(queryStr))
+  // let query = Tour.find(JSON.parse(queryStr))
 
   // Sorting
   if (req.query.sort) {
@@ -120,7 +142,9 @@ export const getAllTour = catchAsync(async (req, res, next) => {
   }
 
   // Execute query
-  const tours = await query
+  const features = new APIFeatures(Tour.find(), req.query).filter()
+
+  const tours = await features.query
 
   res.status(200).json({
     status: 'success',
