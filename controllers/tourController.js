@@ -2,6 +2,7 @@ import Tour from '../models/tourModel.js'
 import City from '../models/cityModel.js'
 import catchAsync from '../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
+import { APIFeatures } from '../utils/apiFeatures.js'
 
 export const aliasTopTours = (req, res, next) => {
   req.query.limit = '7'
@@ -77,104 +78,7 @@ export const deleteTour = catchAsync(async (req, res, next) => {
   res.status(204).json('Tour deleted!')
 })
 
-class APIFeatures {
-  constructor(query, queryString) {
-    this.query = query
-    this.queryString = queryString
-  }
-
-  filter() {
-    const queryObj = { ...this.queryString }
-
-    // Filtering
-
-    const excludedFields = ['page', 'sort', 'limit', 'fields']
-    excludedFields.forEach(el => delete queryObj[el])
-
-    // Advanced filtering
-    let queryStr = JSON.stringify(queryObj)
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
-
-    this.query = this.query.find(JSON.parse(queryStr))
-
-    return this
-  }
-
-  sort() {
-    if (this.queryString.sort) {
-      const sortBy = this.queryString.sort.split(',').join(' ')
-      this.query = this.query.sort(sortBy)
-    } else {
-      this.query = this.query.sort('-createdAt')
-    }
-
-    return this
-  }
-
-  limitFields() {
-    if (this.queryString.fields) {
-      const fields = this.queryString.fields.split(',').join(' ')
-      this.query = this.query.select(fields)
-    } else {
-      this.query = this.query.select('-__v')
-    }
-
-    return this
-  }
-
-  paginate() {
-    const page = this.queryString.page * 1 || 1
-    const limit = this.queryString.limit * 1 || 100
-    const skip = (page - 1) * limit
-
-    this.query = this.query.skip(skip).limit(limit)
-
-    return this
-  }
-}
-
 export const getAllTour = catchAsync(async (req, res, next) => {
-  // Build query
-  // const queryObj = { ...req.query }
-
-  // // Filtering
-  // const excludedFields = ['page', 'sort', 'limit', 'fields']
-  // excludedFields.forEach(el => delete queryObj[el])
-
-  // // Advanced filtering
-  // let queryStr = JSON.stringify(queryObj)
-  // queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
-
-  // let query = Tour.find(JSON.parse(queryStr))
-
-  // Sorting
-  // if (req.query.sort) {
-  //   const sortBy = req.query.sort.split(',').join(' ')
-  //   query = query.sort(sortBy)
-  // } else {
-  //   query = query.sort('-createdAt')
-  // }
-
-  // Field Limiting
-  // if (req.query.fields) {
-  //   const fields = req.query.fields.split(',').join(' ')
-  //   query = query.select(fields)
-  // } else {
-  //   query = query.select('-__v')
-  // }
-
-  // Pagination
-  // const page = req.query.page * 1 || 1
-  // const limit = req.query.limit * 1 || 100
-  // const skip = (page - 1) * limit
-
-  // query = query.skip(skip).limit(limit)
-
-  // if (req.query.page) {
-  //   const numTours = await Tour.countDocuments()
-  //   if (skip >= numTours) throw new AppError('This page does not exist', 404)
-  // }
-
   // Execute query
   const features = new APIFeatures(Tour.find(), req.query)
     .filter()
