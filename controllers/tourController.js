@@ -116,7 +116,8 @@ export const getTourStats = catchAsync(async (req, res, next) => {
     },
     {
       $group: {
-        _id: '$city',
+        // grouping by difficulty or city or whatever value we want.
+        _id: { $toUpper: '$difficulty' },
         numTours: { $sum: 1 },
         numRatings: { $sum: '$ratingsQuantity' },
         avgRating: { $avg: '$ratingsAverage' },
@@ -124,6 +125,14 @@ export const getTourStats = catchAsync(async (req, res, next) => {
         minPrice: { $min: '$price' },
         maxPrice: { $max: '$price' },
       },
+    },
+    {
+      // sorting by price, ascending. It has to be with the property defined in the $group
+      $sort: { avgPrice: 1 },
+    },
+    {
+      // redefined the match with $ne which stands for not equal.
+      $match: { _id: { $ne: 'EASY' } },
     },
   ])
 
