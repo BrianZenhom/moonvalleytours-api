@@ -108,3 +108,29 @@ export const getToursInCity = catchAsync(async (req, res, next) => {
 
   res.status(200).json({ count, tours })
 })
+
+export const getTourStats = catchAsync(async (req, res, next) => {
+  const stats = await Tour.aggregate([
+    {
+      $match: { ratingsAverage: { $gte: 4.5 } },
+    },
+    {
+      $group: {
+        _id: '$city',
+        numTours: { $sum: 1 },
+        numRatings: { $sum: '$ratingsQuantity' },
+        avgRating: { $avg: '$ratingsAverage' },
+        avgPrice: { $avg: '$price' },
+        minPrice: { $min: '$price' },
+        maxPrice: { $max: '$price' },
+      },
+    },
+  ])
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      stats,
+    },
+  })
+})
