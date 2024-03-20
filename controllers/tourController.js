@@ -143,3 +143,16 @@ export const getTourStats = catchAsync(async (req, res, next) => {
     },
   })
 })
+
+export const getMonthlyPlan = catchAsync(async (req, res, next) => {
+  const year = req.params.year * 1
+
+  const plan = await Tour.aggregate([])
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      plan,
+    },
+  })
+})
