@@ -93,4 +93,9 @@ TourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7
 })
 
+// Document middleware: runs before the .save() action and the .create()
+TourSchema.pre('save', function () {
+  console.log(this)
+})
+
 export default mongoose.model('Tour', TourSchema)
