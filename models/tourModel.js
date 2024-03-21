@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import validator from 'validator'
+import slugify from 'slugify'
 
 const TourSchema = new mongoose.Schema(
   {
@@ -31,6 +31,7 @@ const TourSchema = new mongoose.Schema(
         'A tour title must have more or equal than 10 characters',
       ],
     },
+    slug: String,
     price: {
       type: Number,
       required: [true, 'Price is required, please set a price for this tour'],
@@ -94,8 +95,12 @@ TourSchema.virtual('durationWeeks').get(function () {
 })
 
 // Document middleware: runs before the .save() action and the .create()
-TourSchema.pre('save', function () {
-  console.log(this)
+// We can have middleware running before and after of certain events
+// This is called a Pre save Hook., The 'save' is called a hook
+
+TourSchema.pre('save', function (next) {
+  this.slug = slugify(this.title, { lower: true })
+  next()
 })
 
 export default mongoose.model('Tour', TourSchema)
