@@ -9,7 +9,7 @@
     "start:prod": "cross-env NODE_ENV=production nodemon index.js"
   },
   "keywords": [],
-  "author": "BZ",
+  "author": "BrianZenhom",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "2.4.3",
