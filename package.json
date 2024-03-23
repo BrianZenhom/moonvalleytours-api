@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon index.js",
-    "start:prod": "cross-env NODE_ENV=production nodemon index.js"
+    "start:prod": "cross-env NODE_ENV=production nodemon index.js",
+    "debug": "ndb index.js"
   },
   "keywords": [],
   "author": "BrianZenhom",
