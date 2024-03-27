@@ -4,6 +4,7 @@ import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
 import mongoSanitize from 'express-mongo-sanitize'
 import xss from 'xss-clean'
+import hpp from 'hpp'
 
 import authRoute from './routes/authRoutes.js'
 import citiesRoute from './routes/citiesRoutes.js'
@@ -78,6 +79,9 @@ app.use(mongoSanitize())
 
 // Data sanitization against XSS
 app.use(xss())
+
+// Prevent parameter pollution
+app.use(hpp())
 
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/users', usersRoute)
