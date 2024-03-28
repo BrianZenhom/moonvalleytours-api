@@ -81,7 +81,17 @@ app.use(mongoSanitize())
 app.use(xss())
 
 // Prevent parameter pollution
-app.use(hpp())
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'difficulty',
+      'price',
+    ],
+  })
+)
 
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/users', usersRoute)
