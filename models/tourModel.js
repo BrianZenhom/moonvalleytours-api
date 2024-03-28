@@ -114,10 +114,11 @@ TourSchema.pre(/^find/, function (next) {
   next()
 })
 
-TourSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds!`)
-  next()
-})
+// QUERY middleware the FIND
+// TourSchema.post(/^find/, function (docs, next) {
+//   console.log(`Query took ${Date.now() - this.start} milliseconds!`)
+//   next()
+// })
 
 // AGGREGATION MIDDLEWARE
 TourSchema.pre('aggregate', function (next) {
