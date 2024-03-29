@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema(
     surname: { type: String, required: [true, 'Please tell us your surname'] },
     phone: { type: Number },
     nationality: { type: String, required: true },
-    isAdmin: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false, select: false },
     role: {
       type: String,
       enum: ['user', 'guide', 'lead-guide', 'admin'],
