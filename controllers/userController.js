@@ -1,5 +1,4 @@
 import Users from '../models/userModel.js'
-import AppError from '../utils/appError.js'
 
 export const getUser = async (req, res, next) => {
   try {
@@ -36,7 +35,7 @@ export const deleteUser = async (req, res, next) => {
 
 export const getAllUsers = async (req, res, next) => {
   try {
-    const users = await Users.find()
+    const users = await Users.find().select('+isAdmin')
     res.status(200).json(users)
   } catch (err) {
     next(err)
