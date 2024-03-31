@@ -144,6 +144,15 @@ TourSchema.pre(/^find/, function (next) {
   next()
 })
 
+TourSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -updatedAt -createdAt',
+  })
+
+  next()
+})
+
 // AGGREGATION MIDDLEWARE
 TourSchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } })
