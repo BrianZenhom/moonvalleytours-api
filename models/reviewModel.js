@@ -1,9 +1,7 @@
 import mongoose from 'mongoose'
 
 const ReviewSchema = new mongoose.Schema({
-  // Review
   review: { type: String, required: [true, 'Review cannot be emty!'] },
-  // Rating
   rating: {
     type: Number,
     default: 5,
@@ -11,7 +9,6 @@ const ReviewSchema = new mongoose.Schema({
     max: [5, 'Rating must be below 5'],
   },
   createdAt: { type: Date, default: Date.now },
-  // ref tour
   tour: [
     {
       type: mongoose.Schema.ObjectId,
@@ -19,7 +16,6 @@ const ReviewSchema = new mongoose.Schema({
       required: [true, 'Review must belong to a tour.'],
     },
   ],
-  // ref to user
   user: [
     {
       type: mongoose.Schema.ObjectId,
