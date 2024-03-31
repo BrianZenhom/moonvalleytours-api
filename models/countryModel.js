@@ -4,7 +4,12 @@ const CountrySchema = new mongoose.Schema(
   {
     country: { type: String, required: true, unique: true },
     continents: { type: [String] },
-    cities: { type: [String] },
+    cities: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'City',
+      },
+    ],
     ratingsAverage: { type: Number, default: 0, min: 0, max: 5 },
     ratingsQuantity: { type: Number, default: 0 },
     travellers: { type: Number, default: 0, min: 0 },
