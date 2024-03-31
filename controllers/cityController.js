@@ -24,7 +24,7 @@ export const createCity = async (req, res, next) => {
 }
 export const getCity = async (req, res, next) => {
   try {
-    const city = await City.findOne({ city: req.params.city })
+    const city = await City.findOne({ city: req.params.city }).populate('tours')
     res.status(200).json(city)
   } catch (err) {
     next(err)
