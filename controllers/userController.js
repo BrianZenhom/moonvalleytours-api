@@ -1,4 +1,5 @@
 import Users from '../models/userModel.js'
+import catchAsync from '../utils/catchAsync.js'
 
 export const getUser = async (req, res, next) => {
   try {
@@ -33,11 +34,15 @@ export const deleteUser = async (req, res, next) => {
   }
 }
 
-export const getAllUsers = async (req, res, next) => {
-  try {
-    const users = await Users.find().select('+isAdmin')
-    res.status(200).json(users)
-  } catch (err) {
-    next(err)
-  }
-}
+export const getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await Users.find()
+  // .select('+isAdmin')
+
+  res.status(200).json({
+    status: 'success',
+    result: users.length,
+    data: {
+      users,
+    },
+  })
+})
