@@ -128,6 +128,13 @@ TourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7
 })
 
+// Virutal populate
+TourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id',
+})
+
 // Document middleware: runs before the .save() action and the .create()
 // We can have middleware running before and after of certain events
 // This is called a Pre save Hook., The 'save' is called a hook
