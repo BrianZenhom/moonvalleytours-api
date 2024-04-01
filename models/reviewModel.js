@@ -35,4 +35,16 @@ const ReviewSchema = new mongoose.Schema(
   }
 )
 
+ReviewSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'tour',
+    select: 'title',
+  }).populate({
+    path: 'user',
+    select: 'name nationality',
+  })
+
+  next()
+})
+
 export default mongoose.model('Review', ReviewSchema)
