@@ -19,14 +19,11 @@ export const createTour = catchAsync(async (req, res, next) => {
 
   const savedTour = await newTour.save()
 
-  try {
-    await City.findOneAndUpdate(
-      { city: city },
-      { $push: { tours: savedTour._id } }
-    )
-  } catch (err) {
-    next(err)
-  }
+  await City.findOneAndUpdate(
+    { city: city },
+    { $push: { tours: savedTour._id } }
+  )
+
   res.status(200).json(savedTour)
 })
 
@@ -65,16 +62,13 @@ export const deleteTour = catchAsync(async (req, res, next) => {
     return next(new AppError('No tour found with that ID', 404))
   }
 
-  try {
-    await City.findOneAndUpdate(
-      { city: city },
-      {
-        $pull: { tours: req.params.id },
-      }
-    )
-  } catch (err) {
-    next(err)
-  }
+  await City.findOneAndUpdate(
+    { city: city },
+    {
+      $pull: { tours: req.params.id },
+    }
+  )
+
   res.status(204).json('Tour deleted!')
 })
 
@@ -87,10 +81,11 @@ export const getAllTour = catchAsync(async (req, res, next) => {
     .paginate()
 
   const tours = await features.query
+  const toursCount = await Tour.countDocuments()
 
   res.status(200).json({
     status: 'success',
-    count: tours.length,
+    count: toursCount,
     data: {
       tours,
     },
