@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const CitySchema = new mongoose.Schema(
   {
     city: { type: String, required: true, unique: true },
-    country: { type: String, required: true },
+    country: { type: mongoose.Schema.ObjectId, ref: 'Country' },
     tours: [
       {
         type: mongoose.Schema.ObjectId,
