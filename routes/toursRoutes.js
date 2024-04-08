@@ -11,6 +11,7 @@ import {
   getMonthlyPlan,
 } from '../controllers/tourController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
+import { createReview } from '../controllers/reviewController.js'
 
 const router = express.Router()
 
@@ -33,5 +34,12 @@ router.delete(
   restrictTo('admin', 'lead-guide'),
   deleteTour
 )
+
+// NESTED ROUTES
+// POST /tour/234fad4/reviews
+// GET /tour/234fad4/reviews
+// GET /tour/234fad4/reviews/039193
+
+router.route('/:tourId/reviews').post(protect, restrictTo('user'), createReview)
 
 export default router
