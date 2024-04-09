@@ -24,7 +24,7 @@ export const createCity = async (req, res, next) => {
 }
 export const getCity = async (req, res, next) => {
   try {
-    const city = await City.findOne({ city: req.params.city }).populate('tours')
+    const city = await City.findOne({ id: req.params.id }).populate('tours')
     res.status(200).json(city)
   } catch (err) {
     next(err)
@@ -64,7 +64,7 @@ export const deleteCity = async (req, res, next) => {
     next(err)
   }
 }
-export const getAllCity = async (req, res, next) => {
+export const getAllCities = async (req, res, next) => {
   const regex = new RegExp(req.query.q, 'i')
   const page = req.query.page
   const ITEM_PER_PAGE = 5
@@ -76,7 +76,7 @@ export const getAllCity = async (req, res, next) => {
     : { city: { $regex: regex } }
 
   try {
-    const count = await City.find({ city: { $regex: regex } }).count()
+    const count = await City.find({ city: { $regex: regex } }).countDocuments()
     const cities = await City.find(query)
       .limit(ITEM_PER_PAGE)
       .skip(ITEM_PER_PAGE * (page - 1))
