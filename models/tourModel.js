@@ -148,6 +148,7 @@ TourSchema.pre('save', function (next) {
 TourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } })
   this.start = Date.now()
+
   next()
 })
 
