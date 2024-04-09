@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const CitySchema = new mongoose.Schema(
   {
     city: { type: String, required: true, unique: true },
-    country: { type: mongoose.Schema.ObjectId, ref: 'Country' },
+    country: { type: mongoose.Schema.ObjectId, ref: 'Countries' },
     tours: [
       {
         type: mongoose.Schema.ObjectId,
@@ -25,6 +25,8 @@ CitySchema.pre(/^find/, function (next) {
     path: 'country',
     select: 'country',
   })
+
+  next()
 })
 
 export default mongoose.model('City', CitySchema)
