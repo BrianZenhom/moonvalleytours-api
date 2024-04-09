@@ -20,4 +20,11 @@ const CitySchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+CitySchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'country',
+    select: 'country',
+  })
+})
+
 export default mongoose.model('City', CitySchema)
