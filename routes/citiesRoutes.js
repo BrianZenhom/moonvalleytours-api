@@ -2,7 +2,7 @@ import express from 'express'
 import {
   createCity,
   deleteCity,
-  getAllCity,
+  getAllCities,
   getCitiesInCountry,
   getCity,
   updateCity,
@@ -12,7 +12,7 @@ import { protect, restrictTo } from '../controllers/authController.js'
 const router = express.Router()
 
 // Client routes
-router.get('/', getAllCity)
+router.get('/', getAllCities)
 router.get('/:city', getCity)
 router.get('/in/:country', getCitiesInCountry)
 
