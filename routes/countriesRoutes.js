@@ -11,8 +11,8 @@ import { protect, restrictTo } from '../controllers/authController.js'
 const router = express.Router()
 
 // Client routes
-router.get('/', getAllCountries)
 router.get('/:country', getCountry)
+router.get('/', getAllCountries)
 
 // Admin routes
 router.post('/', protect, restrictTo('admin', 'lead-guide'), createCountry)
