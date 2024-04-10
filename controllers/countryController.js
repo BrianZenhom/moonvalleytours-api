@@ -12,9 +12,8 @@ export const createCountry = async (req, res, next) => {
 }
 export const getCountry = async (req, res) => {
   try {
-    const country = await Countries.findOne({
-      country: req.params.country,
-    }).populate('cities')
+    const country = await Countries.findOne({ id: req.params.id })
+
     res.status(200).json(country)
   } catch (err) {
     next(err)
