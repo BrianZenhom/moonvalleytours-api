@@ -19,4 +19,13 @@ const CountrySchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+CountrySchema.pre(/^findOne/, function (next) {
+  this.populate({
+    path: 'cities',
+    select: 'city ratingsAverage ratingsQuantity CityThumbnail',
+  })
+
+  next()
+})
+
 export default mongoose.model('Countries', CountrySchema)
