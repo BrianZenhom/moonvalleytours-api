@@ -5,11 +5,13 @@ import {
   getAllCountries,
   getCountry,
   updateCountry,
-  // createCityInCountry,
 } from '../controllers/countryController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
+import { createCityInCountry } from '../controllers/cityController.js'
 
 const router = express.Router()
+
+router.use('/:countryId/cities', createCityInCountry)
 
 // Client routes
 router.get('/:country', getCountry)
@@ -19,9 +21,5 @@ router.get('/', getAllCountries)
 router.post('/', protect, restrictTo('admin', 'lead-guide'), createCountry)
 router.put('/:id', protect, restrictTo('admin', 'lead-guide'), updateCountry)
 router.delete('/:id', protect, restrictTo('admin', 'lead-guide'), deleteCountry)
-
-// router
-//   .route('/:countryId/cities')
-//   .post(protect, restrictTo('admin'), createCityInCountry)
 
 export default router
