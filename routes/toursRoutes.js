@@ -11,9 +11,11 @@ import {
   getMonthlyPlan,
 } from '../controllers/tourController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
-import { createReview } from '../controllers/reviewController.js'
+import reviewRouter from './reviewRoutes.js'
 
 const router = express.Router()
+
+router.use('/:tourId/reviews', reviewRouter)
 
 // alias creation, to have certain routes that could be helpful, to not consume too much bandwidth when fetching all tours.
 router.get('/top-7-cheapest', aliasTopTours, getAllTour)
@@ -39,7 +41,5 @@ router.delete(
 // POST /tour/234fad4/reviews
 // GET /tour/234fad4/reviews
 // GET /tour/234fad4/reviews/039193
-
-router.route('/:tourId/reviews').post(protect, restrictTo('user'), createReview)
 
 export default router
