@@ -101,5 +101,12 @@ export const createCityInCountry = async (req, res, next) => {
   // In the form to create a new city, we assign the country selected into the POST
   if (!req.body.country) req.body.country = req.params.countryId
 
-  next()
+  const newCity = await City.create(req.body)
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      newCity,
+    },
+  })
 }
