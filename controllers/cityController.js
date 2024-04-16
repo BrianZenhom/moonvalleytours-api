@@ -1,27 +1,23 @@
 import City from '../models/cityModel.js'
 import Country from '../models/countryModel.js'
+import catchAsync from '../utils/catchAsync.js'
 
-export const createCity = async (req, res, next) => {
-  const countryName = req.params.country
-  const newCity = new City(req.body)
+// export const createCity = catchAsync(async (req, res, next) => {
+//   const countryId = req.params.countryId
+//   const newCity = await City.create(req.body)
 
-  try {
-    const savedCity = await newCity.save()
-    try {
-      await Country.findOneAndUpdate(
-        { country: countryName },
-        {
-          $push: { cities: savedCity._id },
-        }
-      )
-    } catch (err) {
-      next(err)
-    }
-    res.status(200).json(savedCity)
-  } catch (err) {
-    next(err)
-  }
-}
+//   await Country.findOneAndUpdate(
+//     { country: countryId },
+//     {
+//       $push: { cities: newCity._id },
+//     }
+//   )
+
+//   res.status(200).json({
+//     status: 'success',
+//     data: { savedCity },
+//   })
+// })
 export const getCity = async (req, res, next) => {
   try {
     const city = await City.findOne({ id: req.params.id }).populate('tours')
@@ -88,16 +84,23 @@ export const getAllCities = async (req, res, next) => {
   }
 }
 
-export const getCitiesInCountry = async (req, res, next) => {
-  try {
-    const cities = await City.find({ country: req.params.country })
-    res.status(200).json(cities)
-  } catch (err) {
-    next(err)
-  }
-}
+export const getCitiesInCountry = catchAsync(async (req, res, next) => {
+  let filter = {}
+  if (req.params.countryId) filter = { city: req.params.countryId }
 
-export const createCityInCountry = async (req, res, next) => {
+  const cities = await City.find(filter)
+
+  res.status(200).json({
+    status: 'success',
+    count: cities.length,
+    data: {
+      cities,
+    },
+  })
+})
+
+export const createCityInCountry = catchAsync(async (req, res, next) => {
+  console.log('hey')
   // In the form to create a new city, we assign the country selected into the POST
   if (!req.body.country) req.body.country = req.params.countryId
 
@@ -109,4 +112,4 @@ export const createCityInCountry = async (req, res, next) => {
       newCity,
     },
   })
-}
+})

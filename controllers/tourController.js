@@ -81,11 +81,10 @@ export const getAllTour = catchAsync(async (req, res, next) => {
     .paginate()
 
   const tours = await features.query
-  const toursCount = await Tour.countDocuments()
 
   res.status(200).json({
     status: 'success',
-    count: toursCount,
+    count: tours.length,
     data: {
       tours,
     },
@@ -93,15 +92,13 @@ export const getAllTour = catchAsync(async (req, res, next) => {
 })
 
 export const getToursInCity = catchAsync(async (req, res, next) => {
-  const count = await Tour.find({ city: req.params.city }).count()
-
   const tours = await Tour.find({ city: req.params.city })
 
   if (!tours) {
     return next(new AppError('No tours found with that city', 404))
   }
 
-  res.status(200).json({ count, tours })
+  res.status(200).json({ count: tours.length, tours })
 })
 
 export const getTourStats = catchAsync(async (req, res, next) => {

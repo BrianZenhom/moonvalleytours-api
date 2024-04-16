@@ -1,6 +1,5 @@
 import express from 'express'
 import {
-  createCity,
   createCityInCountry,
   deleteCity,
   getAllCities,
@@ -10,9 +9,9 @@ import {
 } from '../controllers/cityController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 
-const router = express.Router()
+const router = express.Router({ mergeParams: true })
 
-router.post(protect, restrictTo('admin'), createCityInCountry)
+router.post('/', protect, restrictTo('admin'), createCityInCountry)
 
 // Client routes
 router.get('/', getAllCities)
