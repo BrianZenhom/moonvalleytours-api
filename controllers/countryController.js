@@ -1,4 +1,5 @@
 import Countries from '../models/countryModel.js'
+import catchAsync from '../utils/catchAsync.js'
 
 export const createCountry = async (req, res, next) => {
   const newCountry = new Countries(req.body)
@@ -10,15 +11,13 @@ export const createCountry = async (req, res, next) => {
     next(err)
   }
 }
-export const getCountry = async (req, res) => {
-  try {
-    const country = await Countries.findOne({ id: req.params.id })
 
-    res.status(200).json(country)
-  } catch (err) {
-    next(err)
-  }
-}
+export const getCountry = catchAsync(async (req, res) => {
+  const country = await Countries.findById(req.params.id)
+
+  res.status(200).json(country)
+})
+
 export const updateCountry = async (req, res) => {
   try {
     const updatedCountry = await Countries.findByIdAndUpdate(
@@ -33,6 +32,7 @@ export const updateCountry = async (req, res) => {
     next(err)
   }
 }
+
 export const deleteCountry = async (req, res) => {
   try {
     await Countries.findByIdAndDelete(req.params.id)
@@ -41,6 +41,7 @@ export const deleteCountry = async (req, res) => {
     next(err)
   }
 }
+
 export const getAllCountries = async (req, res, next) => {
   const regex = new RegExp(req.query.q, 'i')
   const page = req.query.page
