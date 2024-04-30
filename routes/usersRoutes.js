@@ -10,7 +10,7 @@ import { protect, restrictTo } from '../controllers/authController.js'
 const router = express.Router()
 
 // Client routes
-router.route('/:id').get(getUser).put(updateUser).delete(deleteUser)
+router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser)
 
 // Admin routes
 router.get('/', protect, restrictTo('admin', 'lead-guide'), getAllUsers)

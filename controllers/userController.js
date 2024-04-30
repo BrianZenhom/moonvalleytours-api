@@ -24,6 +24,7 @@ export const getAllUsers = catchAsync(async (req, res, next) => {
   })
 })
 
+// Do not update passwords with this!
 export const updateUser = updateOne(Users)
 
 export const deleteUser = deleteOne(Users)
