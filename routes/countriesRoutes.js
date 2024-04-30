@@ -14,7 +14,7 @@ const router = express.Router()
 router.use('/:countryId/cities', citiesRouter)
 
 // Client routes
-router.get('/:country', getCountry)
+router.get('/:id', getCountry)
 router.get('/', getAllCountries)
 
 // Admin routes
