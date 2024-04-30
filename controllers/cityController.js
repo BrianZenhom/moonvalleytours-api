@@ -1,6 +1,7 @@
 import City from '../models/cityModel.js'
 import Country from '../models/countryModel.js'
 import catchAsync from '../utils/catchAsync.js'
+import { updateOne } from './handlerFactory.js'
 
 export const getCity = async (req, res, next) => {
   try {
@@ -10,20 +11,9 @@ export const getCity = async (req, res, next) => {
     next(err)
   }
 }
-export const updateCity = async (req, res, next) => {
-  try {
-    const updatedCity = await Countries.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    )
-    res.status(200).json(updatedCity)
-  } catch (err) {
-    next(err)
-  }
-}
+
+export const updateCity = updateOne(City)
+
 export const deleteCity = catchAsync(async (req, res, next) => {
   await City.findByIdAndDelete(req.params.cityId)
 
@@ -33,6 +23,7 @@ export const deleteCity = catchAsync(async (req, res, next) => {
 
   res.status(200).json('City deleted!')
 })
+
 export const getAllCities = async (req, res, next) => {
   const regex = new RegExp(req.query.q, 'i')
   const page = req.query.page
