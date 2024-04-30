@@ -54,25 +54,6 @@ export const getTour = catchAsync(async (req, res, next) => {
   res.status(200).json(tour)
 })
 
-// export const deleteTour = catchAsync(async (req, res, next) => {
-//   const city = req.params.city
-
-//   const tour = await Tour.findByIdAndDelete(req.params.id)
-
-//   if (!tour) {
-//     return next(new AppError('No tour found with that ID', 404))
-//   }
-
-//   await City.findOneAndUpdate(
-//     { city: city },
-//     {
-//       $pull: { tours: req.params.id },
-//     }
-//   )
-
-//   res.status(204).json('Tour deleted!')
-// })
-
 export const deleteTour = deleteOne(Tour)
 
 export const getAllTour = catchAsync(async (req, res, next) => {
