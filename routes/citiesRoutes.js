@@ -22,7 +22,7 @@ router.get('/in/:country', getCitiesInCountry)
 router.put('/:id', protect, restrictTo('admin', 'lead-guide'), updateCity)
 // router.post('/:country', protect, restrictTo('admin', 'lead-guide'), createCity)
 router.delete(
-  '/:cityId/:country',
+  '/:cityId/:countryId',
   protect,
   restrictTo('admin', 'lead-guide'),
   deleteCity
