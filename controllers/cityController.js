@@ -2,22 +2,6 @@ import City from '../models/cityModel.js'
 import Country from '../models/countryModel.js'
 import catchAsync from '../utils/catchAsync.js'
 
-// export const createCity = catchAsync(async (req, res, next) => {
-//   const countryId = req.params.countryId
-//   const newCity = await City.create(req.body)
-
-//   await Country.findOneAndUpdate(
-//     { country: countryId },
-//     {
-//       $push: { cities: newCity._id },
-//     }
-//   )
-
-//   res.status(200).json({
-//     status: 'success',
-//     data: { savedCity },
-//   })
-// })
 export const getCity = async (req, res, next) => {
   try {
     const city = await City.findOne({ id: req.params.id }).populate('tours')
@@ -40,26 +24,15 @@ export const updateCity = async (req, res, next) => {
     next(err)
   }
 }
-export const deleteCity = async (req, res, next) => {
-  const country = req.params.country
+export const deleteCity = catchAsync(async (req, res, next) => {
+  await City.findByIdAndDelete(req.params.cityId)
 
-  try {
-    await City.findByIdAndDelete(req.params.cityId)
-    try {
-      await Country.findOneAndUpdate(
-        { country: country },
-        {
-          $pull: { cities: req.params.cityId },
-        }
-      )
-    } catch (err) {
-      next(err)
-    }
-    res.status(200).json('City deleted!')
-  } catch (err) {
-    next(err)
-  }
-}
+  await Country.findByIdAndUpdate(req.params.countryId, {
+    $pull: { cities: req.params.cityId },
+  })
+
+  res.status(200).json('City deleted!')
+})
 export const getAllCities = async (req, res, next) => {
   const regex = new RegExp(req.query.q, 'i')
   const page = req.query.page
@@ -105,6 +78,12 @@ export const createCityInCountry = catchAsync(async (req, res, next) => {
   if (!req.body.country) req.body.country = req.params.countryId
 
   const newCity = await City.create(req.body)
+
+  await Country.findByIdAndUpdate(req.params.countryId, {
+    $push: { cities: newCity._id },
+  })
+
+  console.log(req.params.countryId)
 
   res.status(200).json({
     status: 'success',
