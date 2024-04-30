@@ -1,5 +1,6 @@
 import Users from '../models/userModel.js'
 import catchAsync from '../utils/catchAsync.js'
+import { deleteOne } from './handlerFactory.js'
 
 export const getUser = async (req, res, next) => {
   try {
@@ -37,3 +38,5 @@ export const getAllUsers = catchAsync(async (req, res, next) => {
     },
   })
 })
+
+export const deleteUser = deleteOne(Users)
