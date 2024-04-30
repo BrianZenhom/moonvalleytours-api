@@ -1,5 +1,6 @@
 import Countries from '../models/countryModel.js'
 import catchAsync from '../utils/catchAsync.js'
+import { deleteOne, updateOne } from './handlerFactory.js'
 
 export const createCountry = async (req, res, next) => {
   const newCountry = new Countries(req.body)
@@ -18,29 +19,9 @@ export const getCountry = catchAsync(async (req, res) => {
   res.status(200).json(country)
 })
 
-export const updateCountry = async (req, res) => {
-  try {
-    const updatedCountry = await Countries.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    )
-    res.status(200).json(updatedCountry)
-  } catch (err) {
-    next(err)
-  }
-}
+export const updateCountry = updateOne(Countries)
 
-export const deleteCountry = async (req, res) => {
-  try {
-    await Countries.findByIdAndDelete(req.params.id)
-    res.status(200).json('Country deleted!')
-  } catch (err) {
-    next(err)
-  }
-}
+export const deleteCountry = deleteOne(Countries)
 
 export const getAllCountries = async (req, res, next) => {
   const regex = new RegExp(req.query.q, 'i')
