@@ -37,9 +37,4 @@ router.delete(
   deleteTour
 )
 
-// NESTED ROUTES
-// POST /tour/234fad4/reviews
-// GET /tour/234fad4/reviews
-// GET /tour/234fad4/reviews/039193
-
 export default router
