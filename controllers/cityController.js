@@ -1,16 +1,9 @@
 import City from '../models/cityModel.js'
 import Country from '../models/countryModel.js'
 import catchAsync from '../utils/catchAsync.js'
-import { updateOne } from './handlerFactory.js'
+import { getOne, updateOne } from './handlerFactory.js'
 
-export const getCity = async (req, res, next) => {
-  try {
-    const city = await City.findOne({ id: req.params.id }).populate('tours')
-    res.status(200).json(city)
-  } catch (err) {
-    next(err)
-  }
-}
+export const getCity = getOne(City, 'tours')
 
 export const updateCity = updateOne(City)
 
