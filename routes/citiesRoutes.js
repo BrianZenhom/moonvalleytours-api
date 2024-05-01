@@ -15,12 +15,12 @@ router.post('/', protect, restrictTo('admin'), createCityInCountry)
 
 // Client routes
 router.get('/', getAllCities)
-router.get('/:city', getCity)
+router.get('/:id', getCity)
 router.get('/in/:country', getCitiesInCountry)
 
 // Admin routes
 router.put('/:id', protect, restrictTo('admin', 'lead-guide'), updateCity)
-// router.post('/:country', protect, restrictTo('admin', 'lead-guide'), createCity)
+
 router.delete(
   '/:cityId/:countryId',
   protect,
