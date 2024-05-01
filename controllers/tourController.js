@@ -2,7 +2,7 @@ import Tour from '../models/tourModel.js'
 import City from '../models/cityModel.js'
 import catchAsync from '../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
-import { deleteOne, updateOne } from './handlerFactory.js'
+import { deleteOne, getOne, updateOne } from './handlerFactory.js'
 import { APIFeatures } from '../utils/apiFeatures.js'
 
 export const aliasTopTours = (req, res, next) => {
@@ -25,18 +25,15 @@ export const createTour = catchAsync(async (req, res, next) => {
     { $push: { tours: savedTour._id } }
   )
 
-  res.status(200).json(savedTour)
+  res.status(200).json({
+    status: 'success',
+    data: {
+      savedTour,
+    },
+  })
 })
 
-export const getTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate('reviews')
-
-  if (!tour) {
-    return next(new AppError('No tour found with that ID', 404))
-  }
-
-  res.status(200).json(tour)
-})
+export const getTour = getOne(Tour, 'reviews')
 
 export const updateTour = updateOne(Tour)
 
