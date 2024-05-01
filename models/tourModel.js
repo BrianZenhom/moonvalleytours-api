@@ -135,18 +135,23 @@ TourSchema.virtual('reviews', {
   localField: '_id',
 })
 
-// Document middleware: runs before the .save() action and the .create()
-// We can have middleware running before and after of certain events
-// This is called a Pre save Hook., The 'save' is called a hook
+// PRE SAVE HOOKS
 
 TourSchema.pre('save', function (next) {
-  this.slug = slugify(this.title, { lower: true })
+  this.slug = slugify(this.title, {
+    lower: true,
+  })
+
   next()
 })
 
 // QUERY Middleware
 TourSchema.pre(/^find/, function (next) {
-  this.find({ secretTour: { $ne: true } })
+  this.find({
+    secretTour: {
+      $ne: true,
+    },
+  })
   this.start = Date.now()
 
   next()
@@ -163,7 +168,14 @@ TourSchema.pre(/^find/, function (next) {
 
 // AGGREGATION MIDDLEWARE
 TourSchema.pre('aggregate', function (next) {
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } })
+  this.pipeline().unshift({
+    $match: {
+      secretTour: {
+        $ne: true,
+      },
+    },
+  })
+
   next()
 })
 
