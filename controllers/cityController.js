@@ -57,8 +57,6 @@ export const getCitiesInCountry = catchAsync(async (req, res, next) => {
 })
 
 export const createCityInCountry = catchAsync(async (req, res, next) => {
-  console.log('hey')
-  // In the form to create a new city, we assign the country selected into the POST
   if (!req.body.country) req.body.country = req.params.countryId
 
   const newCity = await City.create(req.body)
@@ -66,8 +64,6 @@ export const createCityInCountry = catchAsync(async (req, res, next) => {
   await Country.findByIdAndUpdate(req.params.countryId, {
     $push: { cities: newCity._id },
   })
-
-  console.log(req.params.countryId)
 
   res.status(200).json({
     status: 'success',
