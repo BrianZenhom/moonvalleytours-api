@@ -1,6 +1,6 @@
 import Countries from '../models/countryModel.js'
 import catchAsync from '../utils/catchAsync.js'
-import { deleteOne, updateOne } from './handlerFactory.js'
+import { deleteOne, getOne, updateOne } from './handlerFactory.js'
 
 export const createCountry = async (req, res, next) => {
   const newCountry = new Countries(req.body)
@@ -13,11 +13,7 @@ export const createCountry = async (req, res, next) => {
   }
 }
 
-export const getCountry = catchAsync(async (req, res) => {
-  const country = await Countries.findById(req.params.id)
-
-  res.status(200).json(country)
-})
+export const getCountry = getOne(Countries)
 
 export const updateCountry = updateOne(Countries)
 
