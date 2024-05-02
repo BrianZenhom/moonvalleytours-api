@@ -33,10 +33,8 @@ export const createTour = catchAsync(async (req, res, next) => {
   })
 })
 
-export const getTour = getOne(Tour, 'reviews')
-
+export const getTour = getOne(Tour, { path: 'reviews' })
 export const updateTour = updateOne(Tour)
-
 export const deleteTour = deleteOne(Tour)
 
 export const getAllTour = catchAsync(async (req, res, next) => {

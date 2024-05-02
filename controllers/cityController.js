@@ -3,7 +3,11 @@ import Country from '../models/countryModel.js'
 import catchAsync from '../utils/catchAsync.js'
 import { getOne, updateOne } from './handlerFactory.js'
 
-export const getCity = getOne(City, 'tours')
+export const getCity = getOne(City, {
+  path: 'tours',
+  select:
+    'title price priceDiscount desc duration ratingsAverage tourThumbnail cancellation',
+})
 
 export const updateCity = updateOne(City)
 
