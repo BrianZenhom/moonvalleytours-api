@@ -5,9 +5,12 @@ import {
   protect,
   register,
   resetPassword,
+  updatePassword,
 } from '../controllers/authController.js'
 
 const router = express.Router()
+router.patch('/updateMyPassword', protect, updatePassword)
+
 router.post('/register', register)
 router.post('/login', login)
 
