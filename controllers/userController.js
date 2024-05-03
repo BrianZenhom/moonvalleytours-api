@@ -15,6 +15,8 @@ export const updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm)
     return next(new AppError('Wrong route, use update my password', 400))
 
+  console.log(req.user.id)
+
   // filtered unwanted fields
   const filteredBody = filterObj(
     req.body,
@@ -25,7 +27,7 @@ export const updateMe = catchAsync(async (req, res, next) => {
   )
 
   // Update user document
-  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+  const updatedUser = await Users.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,
   })
@@ -81,7 +83,13 @@ export const getAllUsers = catchAsync(async (req, res, next) => {
 
 export const getUser = getOne(Users)
 
+export const createUser = (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: `This route is not defined! Please use /register instead`,
+  })
+}
+
 // Do not update passwords with this!
 export const updateUser = updateOne(Users)
-
 export const deleteUser = deleteOne(Users)
