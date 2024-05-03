@@ -41,6 +41,24 @@ export const register = catchAsync(async (req, res, next) => {
   createSendToken(newUser, 201, res)
 })
 
+export const updatePassword = catchAsync(async (req, res, next) => {
+  // Get user from db
+  const user = await User.findById(req.user.id).select('+password')
+
+  // Check if password is correct
+  if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+    return next(new AppError('Your current password is wrong.', 401))
+  }
+
+  // If its correct, update password
+  user.password = req.body.password
+  user.passwordConfirm = req.body.passwordConfirm
+
+  await user.save()
+  // Log user in, send JWT
+  createSendToken(user, 200, res)
+})
+
 export const login = catchAsync(async (req, res, next) => {
   if (!req.body.email || !req.body.password)
     return next(new AppError('Please provide email and password', 400))
