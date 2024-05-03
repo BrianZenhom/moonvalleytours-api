@@ -28,7 +28,7 @@ router.get('/:id', getTour)
 router.get('/in/:city', getToursInCity)
 
 // Admin routes
-router.post('/:city', protect, restrictTo('admin', 'lead-guide'), createTour)
+router.post('/:cityId', protect, restrictTo('admin', 'lead-guide'), createTour)
 router.patch('/:id', protect, restrictTo('admin', 'lead-guide'), updateTour)
 router.delete(
   '/:id/:city',
