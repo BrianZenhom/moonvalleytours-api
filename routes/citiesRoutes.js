@@ -1,6 +1,5 @@
 import express from 'express'
 import {
-  createCityInCountry,
   deleteCity,
   getAllCities,
   getCitiesInCountry,
@@ -8,10 +7,13 @@ import {
   updateCity,
 } from '../controllers/cityController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
+import { createTourInCity } from '../controllers/tourController.js'
 
 const router = express.Router({ mergeParams: true })
 
-router.post('/', protect, restrictTo('admin'), createCityInCountry)
+router
+  .route('/:countryId/:cityId/tours')
+  .post(protect, restrictTo('admin'), createTourInCity)
 
 // Client routes
 router.get('/', getAllCities)
