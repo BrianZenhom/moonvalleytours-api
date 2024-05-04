@@ -13,7 +13,7 @@ import usersRoute from './routes/usersRoutes.js'
 import reviewRoutes from './routes/reviewRoutes.js'
 
 import cookieParser from 'cookie-parser'
-import cors from 'cors'
+// import cors from 'cors'
 
 import AppError from './utils/appError.js'
 import globalErrorHandler from './controllers/errorController.js'
@@ -43,18 +43,18 @@ mongoose.connection.on('disconnected', () => {
 })
 
 // Set cors
-app.use(
-  cors({
-    origin: [
-      'http://localhost:5173',
-      'http://localhost:3000',
-      'http://localhost:5174',
-      'https://moonvalleytours.com',
-      'https://moonvalleytours-api.vercel.app',
-    ],
-    credentials: true,
-  })
-)
+// app.use(
+//   cors({
+//     origin: [
+//       'http://localhost:5173',
+//       'http://localhost:3000',
+//       'http://localhost:5174',
+//       'https://moonvalleytours.com',
+//       'https://moonvalleytours-api.vercel.app',
+//     ],
+//     credentials: true,
+//   })
+// )
 
 // // Limit Request from same IP
 // const limiter = rateLimit({
