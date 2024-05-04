@@ -13,38 +13,21 @@ export const aliasTopTours = (req, res, next) => {
   next()
 }
 
-export const createTourInCity = catchAsync(async (req, res, next) => {
-  if (!req.body.country) req.body.country = req.params.countryId
-  if (!req.body.city) req.body.city = req.params.cityId
-
+export const createTour = catchAsync(async (req, res, next) => {
   const city = req.params.cityId
-  const newTour = await Tour.create(req.body)
+  const newTour = new Tour(req.body)
 
-  await City.findByIdAndUpdate(city, { $push: { tours: newTour._id } })
+  const savedTour = await newTour.save()
+
+  await City.findByIdAndUpdate(city, { $push: { tours: savedTour._id } })
 
   res.status(200).json({
     status: 'success',
     data: {
-      newTour,
+      savedTour,
     },
   })
 })
-
-// export const createTour = catchAsync(async (req, res, next) => {
-//   const city = req.params.cityId
-//   const newTour = new Tour(req.body)
-
-//   const savedTour = await newTour.save()
-
-//   await City.findByIdAndUpdate(city, { $push: { tours: savedTour._id } })
-
-//   res.status(200).json({
-//     status: 'success',
-//     data: {
-//       savedTour,
-//     },
-//   })
-// })
 
 export const getTour = getOne(Tour, { path: 'reviews' })
 export const updateTour = updateOne(Tour)

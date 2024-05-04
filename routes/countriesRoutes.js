@@ -7,13 +7,8 @@ import {
   updateCountry,
 } from '../controllers/countryController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
-import { createCityInCountry } from '../controllers/cityController.js'
 
 const router = express.Router()
-
-router
-  .route('/:countryId/cities')
-  .post(protect, restrictTo('admin'), createCityInCountry)
 
 // Client routes
 router.get('/:id', getCountry)

@@ -7,6 +7,7 @@ import {
   aliasTopTours,
   getTourStats,
   getMonthlyPlan,
+  createTour,
 } from '../controllers/tourController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 import reviewRouter from './reviewRoutes.js'
@@ -18,20 +19,22 @@ router.use('/:tourId/reviews', reviewRouter)
 // alias creation, to have certain routes that could be helpful, to not consume too much bandwidth when fetching all tours.
 router.get('/top-7-cheapest', aliasTopTours, getAllTour)
 router.get('/tour-stats', getTourStats)
-router.get('/monthly-plan/:year', getMonthlyPlan)
-
-// Client routes
-router.get('/', getAllTour)
-router.get('/:id', getTour)
-
-// Admin routes
-// router.post('/:cityId', protect, restrictTo('admin', 'lead-guide'), createTour)
-router.patch('/:id', protect, restrictTo('admin', 'lead-guide'), updateTour)
-router.delete(
-  '/:id/:city',
+router.get(
+  '/monthly-plan/:year',
   protect,
-  restrictTo('admin', 'lead-guide'),
-  deleteTour
+  restrictTo('admin', 'lead-guide', 'guide'),
+  getMonthlyPlan
 )
+
+router.get('/', getAllTour).post(createTour)
+
+router
+  .route('/:id')
+  .get(getTour)
+  .patch(protect, restrictTo('admin', 'lead-guide'), updateTour)
+
+router
+  .post('/:cityId', protect, restrictTo('admin', 'lead-guide'), createTour)
+  .delete('/:id/:city', protect, restrictTo('admin', 'lead-guide'), deleteTour)
 
 export default router

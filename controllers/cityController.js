@@ -1,6 +1,5 @@
 import City from '../models/cityModel.js'
 import Country from '../models/countryModel.js'
-import tourModel from '../models/tourModel.js'
 import catchAsync from '../utils/catchAsync.js'
 import { getOne, updateOne } from './handlerFactory.js'
 
