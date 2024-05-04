@@ -1,9 +1,9 @@
 import express from 'express'
 import mongoose from 'mongoose'
 // import rateLimit from 'express-rate-limit'
-import mongoSanitize from 'express-mongo-sanitize'
-import xss from 'xss-clean'
-import hpp from 'hpp'
+// import mongoSanitize from 'express-mongo-sanitize'
+// import xss from 'xss-clean'
+// import hpp from 'hpp'
 
 import authRoute from './routes/authRoutes.js'
 import citiesRoute from './routes/citiesRoutes.js'
@@ -71,23 +71,23 @@ app.use(cookieParser())
 // app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 
 // Data sanitization against NoSQL query injection
-app.use(mongoSanitize())
+// app.use(mongoSanitize())
 
 // Data sanitization against XSS
-app.use(xss())
+// app.use(xss())
 
 // Prevent parameter pollution
-app.use(
-  hpp({
-    whitelist: [
-      'duration',
-      'ratingsQuantity',
-      'ratingsAverage',
-      'difficulty',
-      'price',
-    ],
-  })
-)
+// app.use(
+//   hpp({
+//     whitelist: [
+//       'duration',
+//       'ratingsQuantity',
+//       'ratingsAverage',
+//       'difficulty',
+//       'price',
+//     ],
+//   })
+// )
 
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/users', usersRoute)
