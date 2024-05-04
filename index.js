@@ -1,6 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import rateLimit from 'express-rate-limit'
+// import rateLimit from 'express-rate-limit'
 import mongoSanitize from 'express-mongo-sanitize'
 import xss from 'xss-clean'
 import hpp from 'hpp'
@@ -56,19 +56,19 @@ app.use(
   })
 )
 
-// Limit Request from same IP
-const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: 'Too many requests, please try again later!',
-})
-app.use('/api', limiter)
+// // Limit Request from same IP
+// const limiter = rateLimit({
+//   max: 100,
+//   windowMs: 60 * 60 * 1000,
+//   message: 'Too many requests, please try again later!',
+// })
+// app.use('/api', limiter)
 
 // Body parser
 app.use(cookieParser())
 
-app.use(express.json({ limit: '50mb' }))
-app.use(express.urlencoded({ extended: true, limit: '50mb' }))
+// app.use(express.json({ limit: '50mb' }))
+// app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize())
