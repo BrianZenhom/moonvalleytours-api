@@ -1,7 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import rateLimit from 'express-rate-limit'
-import helmet from 'helmet'
 import mongoSanitize from 'express-mongo-sanitize'
 import xss from 'xss-clean'
 import hpp from 'hpp'
@@ -57,9 +56,6 @@ app.use(
   })
 )
 
-// Set security http headers
-app.use(helmet())
-
 // Limit Request from same IP
 const limiter = rateLimit({
   max: 100,
@@ -67,8 +63,6 @@ const limiter = rateLimit({
   message: 'Too many requests, please try again later!',
 })
 app.use('/api', limiter)
-
-app.disable('x-powered-by')
 
 // Body parser
 app.use(cookieParser())
