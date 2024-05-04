@@ -12,15 +12,16 @@ import { protect, restrictTo } from '../controllers/authController.js'
 
 const router = express.Router()
 
-// Client routes
-router.get('/me', protect, getMe, getUser)
+router.use(protect)
 
-router.patch('/updateMe', protect, updateMe)
-router.delete('/deleteMe', protect, deleteMe)
+router.get('/me', getMe, getUser)
+
+router.patch('/updateMe', updateMe)
+router.delete('/deleteMe', deleteMe)
+
+router.use(restrictTo('admin'))
 
 router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser)
-
-// Admin routes
-router.get('/', protect, restrictTo('admin', 'lead-guide'), getAllUsers)
+router.get('/', restrictTo('admin', 'lead-guide'), getAllUsers)
 
 export default router

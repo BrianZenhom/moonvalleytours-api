@@ -21,8 +21,6 @@ export const updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm)
     return next(new AppError('Wrong route, use update my password', 400))
 
-  console.log(req.user.id)
-
   // filtered unwanted fields
   const filteredBody = filterObj(
     req.body,
