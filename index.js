@@ -51,6 +51,7 @@ app.use(
       'http://localhost:3000',
       'http://localhost:5174',
       'https://moonvalleytours.com',
+      'https://moonvalleytours-api.vercel.app',
     ],
     credentials: true,
   })
