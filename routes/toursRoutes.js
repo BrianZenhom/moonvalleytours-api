@@ -1,11 +1,9 @@
 import express from 'express'
 import {
   getTour,
-  createTour,
   getAllTour,
   updateTour,
   deleteTour,
-  getToursInCity,
   aliasTopTours,
   getTourStats,
   getMonthlyPlan,
@@ -13,7 +11,7 @@ import {
 import { protect, restrictTo } from '../controllers/authController.js'
 import reviewRouter from './reviewRoutes.js'
 
-const router = express.Router()
+const router = express.Router({ mergeParams: true })
 
 router.use('/:tourId/reviews', reviewRouter)
 
@@ -25,10 +23,9 @@ router.get('/monthly-plan/:year', getMonthlyPlan)
 // Client routes
 router.get('/', getAllTour)
 router.get('/:id', getTour)
-router.get('/in/:city', getToursInCity)
 
 // Admin routes
-router.post('/:cityId', protect, restrictTo('admin', 'lead-guide'), createTour)
+// router.post('/:cityId', protect, restrictTo('admin', 'lead-guide'), createTour)
 router.patch('/:id', protect, restrictTo('admin', 'lead-guide'), updateTour)
 router.delete(
   '/:id/:city',
