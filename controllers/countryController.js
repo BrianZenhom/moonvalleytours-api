@@ -14,9 +14,7 @@ export const createCountry = async (req, res, next) => {
 }
 
 export const getCountry = getOne(Countries)
-
 export const updateCountry = updateOne(Countries)
-
 export const deleteCountry = deleteOne(Countries)
 
 export const getAllCountries = async (req, res, next) => {
