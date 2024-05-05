@@ -22,7 +22,8 @@ const CountrySchema = new mongoose.Schema(
 CountrySchema.pre(/^findOne/, function (next) {
   this.populate({
     path: 'cities',
-    select: 'city ratingsAverage ratingsQuantity CityThumbnail travellers',
+    select:
+      'city ratingsAverage ratingsQuantity cityCover cityThumbnail travellers',
   })
 
   next()
