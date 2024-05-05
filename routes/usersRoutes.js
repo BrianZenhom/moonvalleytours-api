@@ -15,12 +15,10 @@ const router = express.Router()
 router.use(protect)
 
 router.get('/me', getMe, getUser)
-
 router.patch('/updateMe', updateMe)
 router.delete('/deleteMe', deleteMe)
 
 router.use(restrictTo('admin'))
-
 router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser)
 router.get('/', restrictTo('admin', 'lead-guide'), getAllUsers)
 
