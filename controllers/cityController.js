@@ -24,7 +24,7 @@ export const deleteCity = catchAsync(async (req, res, next) => {
 export const getAllCities = async (req, res, next) => {
   const regex = new RegExp(req.query.q, 'i')
   const page = req.query.page
-  const ITEM_PER_PAGE = 5
+  const ITEM_PER_PAGE = 6
   // Create the featured query and fetch featured if it is true
   const featured = req.query.featured
 
