@@ -50,7 +50,7 @@ const limiter = rateLimit({
   validate: {
     xForwardedForHeader: false,
   },
-  max: 100,
+  max: 200,
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests, please try again later!',
 })
