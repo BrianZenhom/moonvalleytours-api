@@ -47,6 +47,9 @@ app.use(cors())
 
 // // Limit Request from same IP
 const limiter = rateLimit({
+  validate: {
+    xForwardedForHeader: false,
+  },
   max: 100,
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests, please try again later!',
