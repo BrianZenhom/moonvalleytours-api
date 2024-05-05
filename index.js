@@ -94,7 +94,7 @@ app.all('*', (req, res, next) => {
 
 app.use(globalErrorHandler)
 
-const PORT = process.env.PORT || 4000
+const PORT = 1234 || process.env.PORT
 
 const server = app.listen(PORT, () => {
   connect()
