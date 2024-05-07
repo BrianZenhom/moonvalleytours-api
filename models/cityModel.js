@@ -20,7 +20,7 @@ const CitySchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-CitySchema.pre(/^findOne/, function (next) {
+CitySchema.pre(/^find/, function (next) {
   this.populate({
     path: 'country',
     select: 'country',
