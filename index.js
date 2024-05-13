@@ -31,7 +31,7 @@ const app = express()
 
 const connect = async () => {
   try {
-    await mongoose.connect(process.env.MONGO)
+    await mongoose.connect(process.env.MONGODB)
     console.log('connected to mongodb')
   } catch (err) {
     throw err
