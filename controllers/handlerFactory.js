@@ -69,6 +69,7 @@ export const getOne = (Model, popOptions) =>
       data: doc,
     })
   })
+
 export const getAll = Model =>
   catchAsync(async (req, res, next) => {
     let filter = {}
@@ -80,7 +81,7 @@ export const getAll = Model =>
       .limitFields()
       .paginate()
 
-    const doc = await features.query
+    const doc = await features.query.explain()
 
     res.status(200).json({
       status: 'success',
