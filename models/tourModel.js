@@ -182,7 +182,3 @@ TourSchema.pre('aggregate', function (next) {
 })
 
 export default mongoose.model('Tour', TourSchema)
-
-// POST /cities/1231232/tour
-// GET /cities/1231232/tour
-// GET /cities/1231232/tour/12312323
