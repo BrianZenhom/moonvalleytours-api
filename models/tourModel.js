@@ -159,7 +159,7 @@ TourSchema.pre(/^find/, function (next) {
   next()
 })
 
-TourSchema.pre(/^find/, function (next) {
+TourSchema.pre(/^findOne/, function (next) {
   this.populate({
     path: 'guides',
     select: '-__v -updatedAt -createdAt',

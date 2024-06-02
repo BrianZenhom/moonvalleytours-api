@@ -23,7 +23,7 @@ const CitySchema = new mongoose.Schema(
 CitySchema.pre(/^find/, function (next) {
   this.populate({
     path: 'country',
-    select: 'country',
+    select: 'country continents',
   })
 
   next()

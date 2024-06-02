@@ -1,7 +1,7 @@
 import City from '../models/cityModel.js'
 import Country from '../models/countryModel.js'
 import catchAsync from '../utils/catchAsync.js'
-import { getOne, updateOne } from './handlerFactory.js'
+import { getAll, getOne, updateOne } from './handlerFactory.js'
 
 export const getCity = getOne(City, {
   path: 'tours',
@@ -21,25 +21,7 @@ export const deleteCity = catchAsync(async (req, res, next) => {
   res.status(200).json('City deleted!')
 })
 
-export const getAllCities = catchAsync(async (req, res, next) => {
-  const regex = new RegExp(req.query.q, 'i')
-  const page = req.query.page
-  const ITEM_PER_PAGE = 6
-  // Create the featured query and fetch featured if it is true
-  const featured = req.query.featured
-
-  let query = featured
-    ? { city: { $regex: regex }, featured: featured }
-    : { city: { $regex: regex } }
-
-  const count = await City.find({ city: { $regex: regex } }).countDocuments()
-  const cities = await City.find(query)
-    .limit(ITEM_PER_PAGE)
-    .skip(ITEM_PER_PAGE * (page - 1))
-    .lean()
-
-  res.status(200).json({ count, cities })
-})
+export const getAllCities = getAll(City)
 
 export const getCitiesInCountry = catchAsync(async (req, res, next) => {
   let filter = {}

@@ -41,7 +41,3 @@ ReviewSchema.pre(/^find/, function (next) {
 })
 
 export default mongoose.model('Review', ReviewSchema)
-
-// POST /tour/234fad4/reviews
-// GET /tour/234fad4/reviews
-// GET /tour/234fad4/reviews/039193
