@@ -12,7 +12,7 @@ import {
 import { protect, restrictTo } from '../controllers/authController.js'
 import reviewRouter from './reviewRoutes.js'
 
-const router = express.Router({ mergeParams: true })
+const router = express.Router()
 
 router.use('/:tourId/reviews', reviewRouter)
 

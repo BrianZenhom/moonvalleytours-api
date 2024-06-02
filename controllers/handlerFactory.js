@@ -12,6 +12,7 @@ export const deleteOne = Model =>
 
     res.status(204).json({
       status: 'success',
+      message: 'doc deleted',
       data: null,
     })
   })
