@@ -3,8 +3,8 @@ import slugify from 'slugify'
 
 const TourSchema = new mongoose.Schema(
   {
-    city: { type: String, required: true },
-    country: { type: String, required: true },
+    city: { type: mongoose.Schema.ObjectId, ref: 'City' },
+    country: { type: mongoose.Schema.ObjectId, ref: 'Countries' },
     continent: {
       type: [String],
       enum: {
