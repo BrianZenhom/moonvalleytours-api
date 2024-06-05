@@ -4,6 +4,14 @@ import catchAsync from '../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
 import { deleteOne, getAll, getOne, updateOne } from './handlerFactory.js'
 
+export const setCityCountryIds = (req, res, next) => {
+  // Allow nested routes
+  if (!req.body.city) req.body.city = req.params.cityId
+  if (!req.body.country) req.body.country = req.params.countryId
+
+  next()
+}
+
 export const aliasTopTours = (req, res, next) => {
   req.query.limit = '7'
   req.query.sort = 'price,-ratingsAverage'
