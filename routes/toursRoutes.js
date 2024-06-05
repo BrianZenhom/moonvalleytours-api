@@ -8,6 +8,7 @@ import {
   getTourStats,
   getMonthlyPlan,
   createTour,
+  setCityCountryIds,
 } from '../controllers/tourController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 import reviewRouter from './reviewRoutes.js'
@@ -34,7 +35,13 @@ router
   .patch(protect, restrictTo('admin', 'lead-guide'), updateTour)
 
 router
-  .post('/:cityId', protect, restrictTo('admin', 'lead-guide'), createTour)
+  .post(
+    '/:countryId/:cityId',
+    setCityCountryIds,
+    protect,
+    restrictTo('admin', 'lead-guide'),
+    createTour
+  )
   .delete('/:id/:city', protect, restrictTo('admin', 'lead-guide'), deleteTour)
 
 export default router
