@@ -6,7 +6,7 @@ import { getAll, getOne, updateOne } from './handlerFactory.js'
 export const getCity = getOne(City, {
   path: 'tours',
   select:
-    'title price priceDiscount desc duration ratingsAverage tourThumbnail cancellation',
+    'title price priceDiscount duration ratingsAverage tourThumbnail cancellation country city slug',
 })
 
 export const updateCity = updateOne(City)
