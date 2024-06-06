@@ -161,21 +161,7 @@ TourSchema.pre(/^find/, function (next) {
 
 TourSchema.pre(/^findOne/, function (next) {
   this.populate({
-    path: 'city',
-    select: 'city',
-  })
-})
-
-TourSchema.pre(/^findOne/, function (next) {
-  this.populate({
-    path: 'country',
-    select: 'country',
-  })
-})
-
-TourSchema.pre(/^findOne/, function (next) {
-  this.populate({
-    path: 'guides',
+    path: 'guides country city',
     select: '-__v -updatedAt -createdAt',
   })
 
