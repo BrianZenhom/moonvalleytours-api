@@ -124,7 +124,8 @@ const TourSchema = new mongoose.Schema(
   }
 )
 
-TourSchema.index({ price: 1 })
+TourSchema.index({ price: 1, ratingsAverage: -1 })
+TourSchema.index({ slug: 1 })
 
 TourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7
@@ -161,8 +162,8 @@ TourSchema.pre(/^find/, function (next) {
 
 TourSchema.pre(/^findOne/, function (next) {
   this.populate({
-    path: 'guides country city',
-    select: '-__v -updatedAt -createdAt',
+    path: 'guides  city',
+    select: ' city',
   })
 
   next()
