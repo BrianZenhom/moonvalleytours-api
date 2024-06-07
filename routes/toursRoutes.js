@@ -27,7 +27,9 @@ router.get(
   getMonthlyPlan
 )
 
-router.get('/', getAllTour).post(createTour)
+router.route('/tours-within/:distance/center/:latlng/unit/:unit')
+
+router.get('/', getAllTour).post(protect, restrictTo('admin'), createTour)
 
 router
   .route('/:id')
