@@ -10,6 +10,7 @@ import {
   createTour,
   setCityCountryIds,
   getToursWithin,
+  getDistances,
 } from '../controllers/tourController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 import reviewRouter from './reviewRoutes.js'
@@ -31,6 +32,8 @@ router.get(
 router
   .route('/tours-within/:distance/center/:latlng/unit/:unit')
   .get(getToursWithin)
+
+router.route('/distances/:latlng/unit/:unit').get(getDistances)
 
 router.get('/', getAllTour).post(protect, restrictTo('admin'), createTour)
 

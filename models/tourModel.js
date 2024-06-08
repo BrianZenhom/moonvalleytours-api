@@ -171,17 +171,4 @@ TourSchema.pre(/^findOne/, function (next) {
   next()
 })
 
-// AGGREGATION MIDDLEWARE
-TourSchema.pre('aggregate', function (next) {
-  this.pipeline().unshift({
-    $match: {
-      secretTour: {
-        $ne: true,
-      },
-    },
-  })
-
-  next()
-})
-
 export default mongoose.model('Tour', TourSchema)
