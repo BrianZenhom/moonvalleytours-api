@@ -9,6 +9,7 @@ import {
   getMonthlyPlan,
   createTour,
   setCityCountryIds,
+  getToursWithin,
 } from '../controllers/tourController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 import reviewRouter from './reviewRoutes.js'
@@ -27,7 +28,9 @@ router.get(
   getMonthlyPlan
 )
 
-router.route('/tours-within/:distance/center/:latlng/unit/:unit')
+router
+  .route('/tours-within/:distance/center/:latlng/unit/:unit')
+  .get(getToursWithin)
 
 router.get('/', getAllTour).post(protect, restrictTo('admin'), createTour)
 
