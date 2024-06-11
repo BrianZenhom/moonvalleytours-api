@@ -140,8 +140,6 @@ TourSchema.virtual('reviews', {
   localField: '_id',
 })
 
-// PRE SAVE HOOKS
-
 TourSchema.pre('save', function (next) {
   this.slug = slugify(this.title, {
     lower: true,
