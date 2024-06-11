@@ -148,7 +148,6 @@ TourSchema.pre('save', function (next) {
   next()
 })
 
-// QUERY Middleware
 TourSchema.pre(/^find/, function (next) {
   this.find({
     secretTour: {
