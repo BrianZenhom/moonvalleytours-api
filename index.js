@@ -36,6 +36,9 @@ const app = express()
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
 
+// serving static files
+app.use(express.static(path.join(__dirname,'public')))
+
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO)
@@ -89,7 +92,10 @@ app.use(
 )
 
 app.get('/', (req, res) => {
-  res.status(200).render('base')
+  res.status(200).render('base', {
+    tour: 'Giza pyramids tour',
+    user: 'Brian'
+  })
 })
 
 app.use('/api/v1/auth', authRoute)
