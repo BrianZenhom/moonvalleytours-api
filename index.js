@@ -4,6 +4,8 @@ import rateLimit from 'express-rate-limit'
 import mongoSanitize from 'express-mongo-sanitize'
 import xss from 'xss-clean'
 import hpp from 'hpp'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 import authRoute from './routes/authRoutes.js'
 import citiesRoute from './routes/citiesRoutes.js'
@@ -26,8 +28,13 @@ process.on('uncaughtException', err => {
 })
 
 import 'dotenv/config'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
+
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'views'))
 
 const connect = async () => {
   try {
@@ -80,6 +87,10 @@ app.use(
     ],
   })
 )
+
+app.get('/', (req, res) => {
+  res.status(200).render('base')
+})
 
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/users', usersRoute)
