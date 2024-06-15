@@ -93,7 +93,7 @@ app.use(
 
 app.get('/', (req, res) => {
   res.status(200).render('base', {
-    tour: 'Giza pyramids tour',
+    tour: 'Moon Valley Tours API',
     user: 'Brian'
   })
 })
