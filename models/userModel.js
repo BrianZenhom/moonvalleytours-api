@@ -10,13 +10,13 @@ const UserSchema = new mongoose.Schema(
       required: [true, 'Please provide your email'],
       unique: true,
       lowercase: true,
-      validate: [validator.isEmail, 'Please provide a valid email'],
+      validate: [validator.isEmail, 'Please provide a valid email']
     },
     password: {
       type: String,
       required: [true, 'Please provide a password'],
       minlength: 8,
-      select: false,
+      select: false
     },
     passwordConfirm: {
       type: String,
@@ -26,8 +26,8 @@ const UserSchema = new mongoose.Schema(
         validator: function (el) {
           return el === this.password
         },
-        message: 'Passwords are not the same!',
-      },
+        message: 'Passwords are not the same!'
+      }
     },
     passwordChangedAt: Date,
     passwordResetToken: String,
@@ -41,13 +41,13 @@ const UserSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ['user', 'guide', 'lead-guide', 'admin'],
-      default: 'user',
+      default: 'user'
     },
     active: {
       type: Boolean,
       default: true,
-      select: false,
-    },
+      select: false
+    }
   },
   { timestamps: true }
 )
