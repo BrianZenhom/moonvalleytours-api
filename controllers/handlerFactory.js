@@ -13,7 +13,7 @@ export const deleteOne = Model =>
     res.status(204).json({
       status: 'success',
       message: 'doc deleted',
-      data: null,
+      data: null
     })
   })
 
@@ -22,11 +22,11 @@ export const updateOne = Model =>
     const updatedDoc = await Model.findByIdAndUpdate(
       req.params.id,
       {
-        $set: req.body,
+        $set: req.body
       },
       {
         new: true,
-        runValidators: true,
+        runValidators: true
       }
     )
 
@@ -37,8 +37,8 @@ export const updateOne = Model =>
     res.status(200).json({
       status: 'success',
       data: {
-        data: updatedDoc,
-      },
+        data: updatedDoc
+      }
     })
   })
 
@@ -49,8 +49,8 @@ export const createOne = Model =>
     res.status(201).json({
       status: 'success',
       data: {
-        data: newDoc,
-      },
+        data: newDoc
+      }
     })
   })
 
@@ -67,7 +67,7 @@ export const getOne = (Model, popOptions) =>
 
     res.status(200).json({
       status: 'success',
-      data: doc,
+      data: doc
     })
   })
 
@@ -88,7 +88,7 @@ export const getAll = Model =>
       status: 'success',
       count: doc.length,
       data: {
-        doc,
-      },
+        doc
+      }
     })
   })
