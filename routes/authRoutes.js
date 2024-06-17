@@ -5,7 +5,7 @@ import {
   protect,
   register,
   resetPassword,
-  updatePassword,
+  updatePassword
 } from '../controllers/authController.js'
 
 const router = express.Router()
