@@ -4,7 +4,7 @@ import {
   deleteCountry,
   getAllCountries,
   getCountry,
-  updateCountry,
+  updateCountry
 } from '../controllers/countryController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 
