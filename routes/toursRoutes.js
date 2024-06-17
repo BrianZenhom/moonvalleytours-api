@@ -10,7 +10,7 @@ import {
   createTour,
   setCityCountryIds,
   getToursWithin,
-  getDistances,
+  getDistances
 } from '../controllers/tourController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 import reviewRouter from './reviewRoutes.js'
