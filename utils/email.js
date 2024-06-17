@@ -7,15 +7,15 @@ const sendEmail = async options => {
     port: process.env.NOREPLYPORT,
     auth: {
       user: process.env.NOREPLYEMAIL,
-      pass: process.env.NOREPLYPW,
-    },
+      pass: process.env.NOREPLYPW
+    }
   })
   // Define the email options
   const mailOptions = {
     from: 'Moon Valley Tours <noreply@moonvalleytours.com>',
     to: options.email,
     subject: options.subject,
-    text: options.message,
+    text: options.message
     // html:
   }
 
