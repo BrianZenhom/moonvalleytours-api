@@ -1,4 +1,5 @@
 import Users from '../models/userModel.js'
+import AppError from '../utils/appError.js'
 import catchAsync from '../utils/catchAsync.js'
 import { deleteOne, getAll, getOne, updateOne } from './handlerFactory.js'
 
@@ -18,8 +19,7 @@ export const getMe = (req, res, next) => {
 
 export const updateMe = catchAsync(async (req, res, next) => {
   // Create an error if an user tries to update password.
-  if (req.body.password || req.body.passwordConfirm)
-    return next(new AppError('Wrong route, use update my password', 400))
+  if (req.body.password || req.body.passwordConfirm) { return next(new AppError('Wrong route, use update my password', 400)) }
 
   // filtered unwanted fields
   const filteredBody = filterObj(
@@ -33,14 +33,14 @@ export const updateMe = catchAsync(async (req, res, next) => {
   // Update user document
   const updatedUser = await Users.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
-    runValidators: true,
+    runValidators: true
   })
 
   res.status(200).json({
     status: 'success',
     data: {
-      user: updatedUser,
-    },
+      user: updatedUser
+    }
   })
 })
 
@@ -50,14 +50,14 @@ export const deleteMe = catchAsync(async (req, res, next) => {
 
   res.status(204).json({
     status: 'success',
-    data: null,
+    data: null
   })
 })
 
 export const createUser = (req, res) => {
   res.status(200).json({
     status: 'success',
-    message: `This route is not defined! Please use /register instead`,
+    message: 'This route is not defined! Please use /register instead'
   })
 }
 
