@@ -4,7 +4,7 @@ import {
   deleteOne,
   getAll,
   getOne,
-  updateOne,
+  updateOne
 } from './handlerFactory.js'
 
 export const setTourUserIds = (req, res, next) => {
