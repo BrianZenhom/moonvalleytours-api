@@ -32,7 +32,7 @@ const sendErrorDev = (err, res) => {
     status: err.status,
     error: err,
     message: err.message,
-    stack: err.stack,
+    stack: err.stack
   })
 }
 
@@ -41,7 +41,7 @@ const sendErrorProd = (err, res) => {
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
-      message: err.message,
+      message: err.message
     })
 
     // Programming or other unknown error: don't want to leak details
@@ -52,7 +52,7 @@ const sendErrorProd = (err, res) => {
     // 2) Send generic message
     res.status(500).json({
       status: 'error',
-      message: 'Something went wrong!',
+      message: 'Something went wrong!'
     })
   }
 }
