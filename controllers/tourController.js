@@ -32,8 +32,8 @@ export const createTour = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
-      savedTour,
-    },
+      savedTour
+    }
   })
 })
 
@@ -55,7 +55,7 @@ export const getToursInCity = catchAsync(async (req, res, next) => {
 export const getTourStats = catchAsync(async (req, res, next) => {
   const stats = await Tour.aggregate([
     {
-      $match: { ratingsAverage: { $gte: 4.5 } },
+      $match: { ratingsAverage: { $gte: 4.5 } }
     },
     {
       $group: {
@@ -66,37 +66,37 @@ export const getTourStats = catchAsync(async (req, res, next) => {
         avgRating: { $avg: '$ratingsAverage' },
         avgPrice: { $avg: '$price' },
         minPrice: { $min: '$price' },
-        maxPrice: { $max: '$price' },
-      },
+        maxPrice: { $max: '$price' }
+      }
     },
     {
       // sorting by price, ascending. It has to be with the property defined in the $group
-      $sort: { avgPrice: 1 },
+      $sort: { avgPrice: 1 }
     },
     {
       // redefined the match with $ne which stands for not equal.
-      $match: { _id: { $ne: 'EASY' } },
-    },
+      $match: { _id: { $ne: 'EASY' } }
+    }
   ])
 
   res.status(200).json({
     status: 'success',
     data: {
-      stats,
-    },
+      stats
+    }
   })
 })
 
 export const getMonthlyPlan = catchAsync(async (req, res, next) => {
-  const year = req.params.year * 1
+  // const year = req.params.year * 1
 
   const plan = await Tour.aggregate([])
 
   res.status(200).json({
     status: 'success',
     data: {
-      plan,
-    },
+      plan
+    }
   })
 })
 
@@ -118,15 +118,15 @@ export const getToursWithin = catchAsync(async (req, res, next) => {
   }
 
   const tours = await Tour.find({
-    startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
+    startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } }
   })
 
   res.status(200).json({
     status: 'success',
     results: tours.length,
     data: {
-      data: tours,
-    },
+      data: tours
+    }
   })
 })
 
@@ -150,26 +150,26 @@ export const getDistances = catchAsync(async (req, res, next) => {
       $geoNear: {
         near: {
           type: 'Point',
-          coordinates: [lng * 1, lat * 1],
+          coordinates: [lng * 1, lat * 1]
         },
         distanceField: 'distance',
-        distanceMultiplier: multiplier,
-      },
+        distanceMultiplier: multiplier
+      }
     },
     {
       $project: {
         distance: 1,
         title: 1,
         _id: 1,
-        tourThumbnail: 1,
-      },
-    },
+        tourThumbnail: 1
+      }
+    }
   ])
 
   res.status(200).json({
     status: 'success',
     data: {
-      data: distances,
-    },
+      data: distances
+    }
   })
 })
