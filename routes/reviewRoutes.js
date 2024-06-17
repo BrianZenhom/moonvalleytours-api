@@ -6,7 +6,7 @@ import {
   getAllReviews,
   getReview,
   setTourUserIds,
-  updateReview,
+  updateReview
 } from '../controllers/reviewController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 
