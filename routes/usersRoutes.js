@@ -6,7 +6,7 @@ import {
   deleteUser,
   updateMe,
   deleteMe,
-  getMe,
+  getMe
 } from '../controllers/userController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 
