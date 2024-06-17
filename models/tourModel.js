@@ -15,11 +15,11 @@ const TourSchema = new mongoose.Schema(
           'North America',
           'Australia',
           'Europe',
-          'Antartica',
+          'Antartica'
         ],
         message:
-          'Continents are either: South America, North America, Africa, Asia, Australia, Europe or Antartica',
-      },
+          'Continents are either: South America, North America, Africa, Asia, Australia, Europe or Antartica'
+      }
     },
     title: {
       type: String,
@@ -28,13 +28,13 @@ const TourSchema = new mongoose.Schema(
       maxlength: [40, 'A tour title should be less or equal 40 characters'],
       minlength: [
         10,
-        'A tour title must have more or equal than 10 characters',
-      ],
+        'A tour title must have more or equal than 10 characters'
+      ]
     },
     slug: String,
     price: {
       type: Number,
-      required: [true, 'Price is required, please set a price for this tour'],
+      required: [true, 'Price is required, please set a price for this tour']
     },
     priceDiscount: {
       type: Number,
@@ -43,8 +43,8 @@ const TourSchema = new mongoose.Schema(
         validator: function (val) {
           return val < this.price
         },
-        message: 'Discount price ({VALUE}) should be below the regular price',
-      },
+        message: 'Discount price ({VALUE}) should be below the regular price'
+      }
     },
     desc: { type: String },
     duration: { type: Number, required: [true, 'A tour must have a duration'] },
@@ -53,8 +53,8 @@ const TourSchema = new mongoose.Schema(
       required: [true, 'A tour must have a difficulty'],
       enum: {
         values: ['easy', 'medium', 'difficult'],
-        message: 'Difficulty is either: easy, medium, difficult',
-      },
+        message: 'Difficulty is either: easy, medium, difficult'
+      }
     },
     language: { type: String },
     included: { type: [String] },
@@ -65,63 +65,63 @@ const TourSchema = new mongoose.Schema(
       default: 5,
       min: [1, 'Rating must be above 1.0'],
       max: [5, 'Rating must be below 5.0'],
-      set: val => Math.round(val * 10) / 10,
+      set: val => Math.round(val * 10) / 10
     },
     ratingsQuantity: { type: Number, default: 0 },
     travellers: { type: Number, default: 0, min: 0 },
     tourPhotos: { type: [String] },
     tourThumbnail: {
       type: String,
-      required: [true, 'A tour must have a thumbnail picture'],
+      required: [true, 'A tour must have a thumbnail picture']
     },
     featured: { type: Boolean, default: false },
     createdAt: {
       type: Date,
       default: Date.now(),
-      select: false,
+      select: false
     },
     secretTour: {
       type: Boolean,
-      default: false,
+      default: false
     },
     startLocation: {
       // GeoJSON
       type: {
         type: String,
         default: 'Point',
-        enum: ['Point'],
+        enum: ['Point']
       },
       coordinates: [Number],
       address: String,
-      description: String,
+      description: String
     },
     locations: [
       {
         type: {
           type: String,
           default: 'Point',
-          enum: ['Point'],
+          enum: ['Point']
         },
         coordinates: [Number],
         address: String,
         description: String,
-        day: Number,
-      },
+        day: Number
+      }
     ],
     guides: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: 'User',
-      },
-    ],
+        ref: 'User'
+      }
+    ]
   },
   {
     toJSON: {
-      virtuals: true,
+      virtuals: true
     },
     toObject: {
-      virtuals: true,
-    },
+      virtuals: true
+    }
   }
 )
 
@@ -136,12 +136,12 @@ TourSchema.virtual('durationWeeks').get(function () {
 TourSchema.virtual('reviews', {
   ref: 'Review',
   foreignField: 'tour',
-  localField: '_id',
+  localField: '_id'
 })
 
 TourSchema.pre('save', function (next) {
   this.slug = slugify(this.title, {
-    lower: true,
+    lower: true
   })
 
   next()
@@ -150,8 +150,8 @@ TourSchema.pre('save', function (next) {
 TourSchema.pre(/^find/, function (next) {
   this.find({
     secretTour: {
-      $ne: true,
-    },
+      $ne: true
+    }
   })
   this.start = Date.now()
 
@@ -161,11 +161,10 @@ TourSchema.pre(/^find/, function (next) {
 TourSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'city',
-    select: 'city _id',
+    select: 'city _id'
   })
 
   next()
 })
-
 
 export default mongoose.model('Tour', TourSchema)
