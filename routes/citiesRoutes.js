@@ -5,7 +5,7 @@ import {
   getAllCities,
   getCitiesInCountry,
   getCity,
-  updateCity,
+  updateCity
 } from '../controllers/cityController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 
