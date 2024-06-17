@@ -7,15 +7,15 @@ const CitySchema = new mongoose.Schema(
     tours: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: 'Tour',
-      },
+        ref: 'Tour'
+      }
     ],
     ratingsAverage: { type: Number, default: 5, min: 0, max: 5 },
     ratingsQuantity: { type: Number, default: 0 },
     travellers: { type: Number, default: 0, min: 0 },
     cityCover: { type: String },
     cityThumbnail: { type: String },
-    featured: { type: Boolean, default: false },
+    featured: { type: Boolean, default: false }
   },
   { timestamps: true }
 )
@@ -23,7 +23,7 @@ const CitySchema = new mongoose.Schema(
 CitySchema.pre(/^find/, function (next) {
   this.populate({
     path: 'country',
-    select: 'country continents',
+    select: 'country continents'
   })
 
   next()
