@@ -1,5 +1,5 @@
-import Tour from '../models/tourModel'
-import catchAsync from '../utils/catchAsync'
+import Tour from '../models/tourModel.js'
+import catchAsync from '../utils/catchAsync.js'
 
 export const getOverview = catchAsync(async (req, res, next) => {
   const tours = await Tour.find()
@@ -22,5 +22,7 @@ export const getTour = catchAsync(async (req, res, next) => {
 })
 
 export const getLoginForm = (req, res) => {
-
+  res.status(200).render('login', {
+    title: 'Log into your account'
+  })
 }
