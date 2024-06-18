@@ -13,6 +13,7 @@ import countriesRoute from './routes/countriesRoutes.js'
 import toursRoute from './routes/toursRoutes.js'
 import usersRoute from './routes/usersRoutes.js'
 import reviewRoutes from './routes/reviewRoutes.js'
+import viewRoutes from './routes/viewRoutes.js'
 
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -20,14 +21,14 @@ import cors from 'cors'
 import AppError from './utils/appError.js'
 import globalErrorHandler from './controllers/errorController.js'
 
+import 'dotenv/config'
+
 process.on('uncaughtException', err => {
   console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...')
   console.log(err.name, err.message)
 
   process.exit(1)
 })
-
-import 'dotenv/config'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -37,15 +38,11 @@ app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
 
 // serving static files
-app.use(express.static(path.join(__dirname,'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 const connect = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO)
-    console.log('connected to mongodb')
-  } catch (err) {
-    throw err
-  }
+  await mongoose.connect(process.env.MONGO)
+  console.log('connected to mongodb')
 }
 
 mongoose.connection.on('disconnected', () => {
@@ -58,11 +55,11 @@ app.use(cors())
 // // Limit Request from same IP
 const limiter = rateLimit({
   validate: {
-    xForwardedForHeader: false,
+    xForwardedForHeader: false
   },
   max: 200,
   windowMs: 60 * 60 * 1000,
-  message: 'Too many requests, please try again later!',
+  message: 'Too many requests, please try again later!'
 })
 app.use('/api', limiter)
 
@@ -86,18 +83,12 @@ app.use(
       'ratingsQuantity',
       'ratingsAverage',
       'difficulty',
-      'price',
-    ],
+      'price'
+    ]
   })
 )
 
-app.get('/', (req, res) => {
-  res.status(200).render('base', {
-    tour: 'Moon Valley Tours API',
-    user: 'Brian'
-  })
-})
-
+app.use('/', viewRoutes)
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/users', usersRoute)
 app.use('/api/v1/tours', toursRoute)
