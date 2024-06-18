@@ -1,0 +1,15 @@
+extends base
+
+block content
+  main.main
+    .login-form
+      span.heading-secondary Sign In
+      form.form.form--login
+        .form__group
+          input#email.form__input(type='email', placeholder='', required)
+          label.form__label(for='email') Email
+        .form__group
+          input#password.form__input(type='password', placeholder='', required, minlength='8')
+          label.form__label(for='password') Password
+        .form__group
+          button.btn.btn--main Login
