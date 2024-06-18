@@ -1,7 +1,9 @@
 import express from 'express'
-import { getLoginForm, getTour } from '../controllers/viewsController'
+import { getLoginForm, getOverview, getTour } from '../controllers/viewsController.js'
 
 const router = express.Router()
+
+router.get('/', getOverview)
 
 router.get('/tour/:slug', getTour)
 
