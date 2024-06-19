@@ -1,8 +1,8 @@
 :root {
 
-    --background-color: #E3E3E3;
+    --background-color: #f3f3f3;
     --border-size: 2px;
-    --accent-color: #0AF;
+    --accent-color: #0197ee;
 
     --padding: 0.675rem;
 
@@ -87,11 +87,11 @@ main{
 }
 
 .heading-secondary{
-    padding: .625rem;
+    margin-bottom: 1rem;
 }
 .login-form{
     min-width: 300px;
-    padding: var(--padding);
+    padding: 1.5rem 1.5rem;
     border-radius: 8px;
     box-shadow: var(--perfect-shadow);
     background-color: rgb(255, 255, 255);
@@ -104,15 +104,15 @@ main{
     display: flex;
     flex-direction: column;
     justify-content: start;
-    margin-top: 1.5rem;
+    margin-bottom: 2rem;
     position: relative;
 }
 .form__input{
     outline: none;
     border: none;
     padding: calc(var(--padding)* 1.25) 1rem;
-    outline: 2px solid transparent;
-    background-color: #E3E3E3;
+    outline: 1px solid rgba(175, 175, 175, 0.651);
+    background-color: var(--background-color);
     border-radius: 8px;
     overflow: hidden;
     font-size: 16px;
@@ -123,8 +123,8 @@ main{
     outline: 2px solid crimson;
 }
 .form__input:focus:valid{
-    outline: 2px solid #0AF;
-    color: #0af;
+    outline: 2px solid #0197ee;
+    color: #0197ee;
 }
 
 .form__label{
@@ -144,10 +144,10 @@ main{
  top: -20px;
  left: 0px;
  font-size: 12px;
- color: #0AF;
+ color: #0197ee;
 }
 .form__input:valid{
-    outline: 2px solid #0AF;
+    outline: 2px solid #0197ee;
 }
 
 
@@ -156,18 +156,19 @@ main{
     padding: calc(var(--padding)* 1.25) 1rem;
     border-radius: 8px;
     border: none;
-    outline: none;
+    outline: 2px solid #7272728a;
     cursor: pointer;
     z-index: 1;
-    background-color: #222;
-    color: white;
+    background-color: var(--background-color);
     overflow: hidden;
     font-weight: 500;
     font-size: 18px;
     transition: .3s cubic-bezier(0.39, 0.575, 0.565, 1);
 }
 .btn--main:hover{
-    color: #222;   
+    background-color: var(--accent-color);
+    outline: 2px solid transparent;
+    color: white;
 }
 
 .btn--main::before{
@@ -178,16 +179,16 @@ main{
     bottom: 0;
     right: 0;
     z-index: -1;
-    background-color: #0AF;
-    border-radius: 105px;
-    transition: .3s cubic-bezier(0.39, 0.575, 0.565, 1);
+    border-radius: 8px;
+    background-color: #0197ee;
+    border-radius: 200px;
+    transition: .3s cubic-bezier(0,.93,1,.33);
     transform: scaleX(0);
     transform-origin: center;
-    inset: 2px;
 }
 .btn--main:hover::before{
     transform:  scaleX(1);
-    border-radius: 6px;
+    border-radius: 8px;
 }
 
 
