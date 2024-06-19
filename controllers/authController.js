@@ -110,6 +110,26 @@ export const protect = catchAsync(async (req, res, next) => {
   next()
 })
 
+// Only for rendered pages, no errors
+export const isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET)
+
+    const currentUser = await User.findById(decoded.id)
+    if (!currentUser) {
+      return next()
+    }
+
+    if (currentUser.changedPasswordAfter(decoded.iat)) {
+      return next()
+    }
+
+    req.user = currentUser
+    res.user = currentUser
+    next()
+  }
+})
+
 export const restrictTo = (...roles) => {
   return (req, res, next) => {
     // Roles ['admin', 'lead-guide'] role='user'
