@@ -9,7 +9,7 @@ block content
           input#email.form__input(type='email', placeholder='', required)
           label.form__label(for='email') Email
         .form__group
-          input#password.form__input(type='password', placeholder='', required, minlength='8')
+          input#password.form__input(title="Must be at least 8 characters" pattern="[a-zA-Z0-9]{8,}" type='password', placeholder='', required, minlength='8')
           label.form__label(for='password') Password
         .form__group
           button.btn.btn--main Login
