@@ -85,6 +85,10 @@ main{
     display: grid;
     place-items: center;
 }
+
+.heading-secondary{
+    padding: .625rem;
+}
 .login-form{
     min-width: 300px;
     padding: var(--padding);
@@ -145,6 +149,7 @@ main{
 .form__input:valid{
     outline: 2px solid #0AF;
 }
+
 
 .btn--main{
     position: relative;
