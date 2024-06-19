@@ -88,6 +88,11 @@ app.use(
   })
 )
 
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString()
+  next()
+})
+
 app.use('/', viewRoutes)
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/users', usersRoute)
