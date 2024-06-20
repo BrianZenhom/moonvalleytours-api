@@ -6,10 +6,10 @@ block content
       span.heading-secondary Sign In
       form.form.form--login
         .form__group
-          input#email.form__input(type='email', placeholder='', required)
+          input#email.form__input(type='email', placeholder='name@example.com', required)
           label.form__label(for='email') Email
         .form__group
-          input#password.form__input(title="Must be at least 8 characters" pattern="[a-zA-Z0-9]{8,}" type='password', placeholder='', required, minlength='8')
+          input#password.form__input(title="Must be at least 8 characters" pattern="[a-zA-Z0-9]{8,}" type='password', placeholder='At least 8 characters', required, minlength='8')
           label.form__label(for='password') Password
-        .form__group
-          button.btn.btn--main Login
+        .form__button
+          button.btn.btn--main(type="submit") Login
