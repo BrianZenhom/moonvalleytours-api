@@ -3,7 +3,10 @@
     --background-color: #f3f3f3;
     --border-size: 2px;
     --accent-color: #0197ee;
-
+    --valid: #0197ee;
+    --invalid: crimson;
+    --focus: #004e7a;
+    --blur: #cccbcb;
     --padding: 0.675rem;
 
    --base: hsl(var(--tint, 214) 80% 27% / calc(var(--alpha, 4) * 1%));
@@ -36,50 +39,6 @@ body{
     background-color: rgba(245, 245, 255, 0.904);
 }
 
-strong{
-    font-size: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2rem;
-}
-
-a {
-    background-color: var(--background-color);
-    color: #222;
-    padding: .5em 2em;
-    border: none;
-    outline: none;
-    position: relative;
-    cursor: pointer;
-    text-decoration: none;
-    list-style: none;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: .2s cubic-bezier(0.39, 0.575, 0.565, 1);
-}
-
-a::before{
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    transition: .2s cubic-bezier(0.39, 0.575, 0.565, 1);
-    background-color: var(--accent-color);
-    height: 3px;
-    transform: scaleX(0);
-    transform-origin: center;
-}
-
-a:hover::before,
-a:focus::before{
-    transform: scaleX(1);
-}
-a{
-    z-index: 1;
-}
 main{
     height: 100vh;   
     display: grid;
@@ -89,6 +48,7 @@ main{
 .heading-secondary{
     margin-bottom: 1rem;
 }
+
 .login-form{
     min-width: 300px;
     padding: 1.5rem 1.5rem;
@@ -107,31 +67,55 @@ main{
     margin-bottom: 2rem;
     position: relative;
 }
-.form__input{
-    outline: none;
-    border: none;
-    padding: calc(var(--padding)* 1.25) 1rem;
-    outline: 1px solid rgba(175, 175, 175, 0.651);
-    background-color: var(--background-color);
-    border-radius: 8px;
-    overflow: hidden;
-    font-size: 16px;
-    font-family: Onest;
+
+::placeholder{
+    color: transparent;
 }
 
-.form__input:focus:invalid{
-    outline: 2px solid crimson;
-}
-.form__input:focus:valid{
-    outline: 2px solid #0197ee;
-    color: #0197ee;
+.form__group:has(:invalid) input{
+    outline: 2px solid var(--invalid);
 }
 
-.form__label{
+.form__group:has(:invalid) label{
+    top: -20px;
+    left: 0px;
+    font-size: 12px;
+    color: var(--invalid);
+}
+
+.form__group:has(:invalid:not(:focus)){
+    animation: shake .8s;
+}
+
+.form__group:has(:focus) input{
+    outline: 2px solid var(--focus);
+}
+
+.form__group:focus input {
+    outline-offset: 5px;
+}
+
+.form__group:has(:valid) input{
+    outline: 2px solid var(--valid);
+}
+
+.form__group:has(:valid) label{
+    top: -20px;
+    left: 0px;
+    font-size: 12px;
+    color: var(--accent-color);
+}
+
+.form__group:has(:placeholder-shown) input{
+    outline: 2px solid var(--blur);
+}
+.form__group:has(:placeholder-shown:not(:focus)) {
+    animation: none;
+}
+
+.form__group label{
     position: absolute;
-    font-size: 16px;
-    top: .8rem;
-    left: .8rem;
+    font-size: 12px;
     color: #727272;
     cursor: text;
     transition: 0.2s ease all;
@@ -140,14 +124,38 @@ main{
     user-select: none;
 }
 
-.form__input:focus ~ label, .form__input:valid ~ label {
- top: -20px;
- left: 0px;
- font-size: 12px;
- color: #0197ee;
+.form__group:has(:placeholder-shown) label{
+    font-size: 16px;
 }
-.form__input:valid{
-    outline: 2px solid #0197ee;
+
+.form__group:has(:focus) label{
+    top: -20px;
+    left: 0px;
+    font-size: 12px;
+}
+
+.form__group:has(:placeholder-shown:not(:focus)) label{
+    top: 13px;
+    left: 10px;
+}
+
+
+.form__button{
+    display: flex;
+    flex-direction: column;
+    padding-top: 1.5rem;
+}
+
+.form__input{
+    outline: none;
+    border: none;
+    padding: calc(var(--padding)* 1.25) 1rem;
+    outline: 1px solid var(--color);
+    background-color: var(--background-color);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 16px;
+    font-family: Onest;
 }
 
 
@@ -156,39 +164,34 @@ main{
     padding: calc(var(--padding)* 1.25) 1rem;
     border-radius: 8px;
     border: none;
-    outline: 2px solid #7272728a;
-    cursor: pointer;
+    outline: 2px solid hsl(175, 10%, 70%);
     z-index: 1;
-    background-color: var(--background-color);
+    background-color:hsla(176, 10%, 30%, 0.61) ;
+    color: hsl(175, 10%, 70%);
     overflow: hidden;
     font-weight: 500;
     font-size: 18px;
     transition: .3s cubic-bezier(0.39, 0.575, 0.565, 1);
-}
-.btn--main:hover{
-    background-color: var(--accent-color);
-    outline: 2px solid transparent;
-    color: white;
+    cursor: pointer;
+
 }
 
-.btn--main::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: -1;
-    border-radius: 8px;
+
+
+form:valid [type="submit"]{
     background-color: #0197ee;
-    border-radius: 200px;
-    transition: .3s cubic-bezier(0,.93,1,.33);
-    transform: scaleX(0);
-    transform-origin: center;
-}
-.btn--main:hover::before{
-    transform:  scaleX(1);
-    border-radius: 8px;
+    color: white;
+    outline-color: transparent;
 }
 
-
+@keyframes shake{
+    0%, 100% {
+        transform: translateX(0);
+    } 
+    20%, 40%, 60%, 80%{
+        transform: translateX(-1%);
+    }
+    10%,30%,50%,70%, 90%{
+        transform: translateX(1%);
+    }
+}
