@@ -8,6 +8,7 @@
     --focus: #004e7a;
     --blur: #cccbcb;
     --padding: 0.675rem;
+    --hover: #18aaff;
 
    --base: hsl(var(--tint, 214) 80% 27% / calc(var(--alpha, 4) * 1%));
   /**
@@ -73,7 +74,7 @@ main{
 }
 
 .form__group:has(:invalid) input{
-    outline: 2px solid var(--invalid);
+    outline: 1.5px solid var(--invalid);
 }
 
 .form__group:has(:invalid) label{
@@ -88,7 +89,8 @@ main{
 }
 
 .form__group:has(:focus) input{
-    outline: 2px solid var(--focus);
+    outline: 1.5px solid var(--focus);
+    background-color: white;
 }
 
 .form__group:focus input {
@@ -96,7 +98,7 @@ main{
 }
 
 .form__group:has(:valid) input{
-    outline: 2px solid var(--valid);
+    outline: 1.5px solid var(--valid);
 }
 
 .form__group:has(:valid) label{
@@ -107,7 +109,7 @@ main{
 }
 
 .form__group:has(:placeholder-shown) input{
-    outline: 2px solid var(--blur);
+    outline: 1.5px solid var(--blur);
 }
 .form__group:has(:placeholder-shown:not(:focus)) {
     animation: none;
@@ -150,7 +152,7 @@ main{
     outline: none;
     border: none;
     padding: calc(var(--padding)* 1.25) 1rem;
-    outline: 1px solid var(--color);
+    outline: 1.5px solid var(--color);
     background-color: var(--background-color);
     border-radius: 8px;
     overflow: hidden;
@@ -164,9 +166,8 @@ main{
     padding: calc(var(--padding)* 1.25) 1rem;
     border-radius: 8px;
     border: none;
-    outline: 2px solid hsl(175, 10%, 70%);
+    outline: 1.5px solid hsl(175, 10%, 70%);
     z-index: 1;
-    background-color:hsla(176, 10%, 30%, 0.61) ;
     color: hsl(175, 10%, 70%);
     overflow: hidden;
     font-weight: 500;
@@ -176,10 +177,13 @@ main{
 
 }
 
-
-
 form:valid [type="submit"]{
     background-color: #0197ee;
+    color: white;
+    outline-color: transparent;
+}
+form:valid [type="submit"]:hover{
+    background-color: var(--hover);
     color: white;
     outline-color: transparent;
 }
