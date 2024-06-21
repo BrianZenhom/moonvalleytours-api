@@ -68,7 +68,8 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80px;
+    min-width: 80px;
+    max-width: 90px;
     height: 100%;
     transition: .2s ease;
 }
@@ -93,6 +94,16 @@ main{
     flex-grow: 1;
     flex-basis: 0;
 }
+.nav__user-img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+.nav__el--user{
+    padding: 0 5px;
+}
 
 .heading-secondary{
     margin-bottom: 1rem;
@@ -100,7 +111,7 @@ main{
 
 .login-form{
     min-width: 300px;
-    padding: 1.5rem 1.5rem;
+    padding: 1rem 1.5rem;
     border-radius: 8px;
     box-shadow: var(--perfect-shadow);
     background-color: rgb(255, 255, 255);
@@ -224,6 +235,7 @@ main{
     cursor: pointer;
 
 }
+
 
 form:valid [type="submit"]{
     background-color: #0197ee;
