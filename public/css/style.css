@@ -26,7 +26,6 @@
 
 body{
     font-family: Onest;
-    max-width: 1080px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -41,9 +40,58 @@ body{
 }
 
 main{
-    height: 100vh;   
+    height: 60vh;   
     display: grid;
     place-items: center;
+}
+
+.header{
+     background-color: var(--accent-color);
+     width: 100%;
+     display: flex;
+     justify-content: center;
+}
+
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+    width: 1080px;
+    height: 80px;
+}
+.img{
+    opacity: .65;
+}
+.nav__el{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 100%;
+    transition: .2s ease;
+}
+
+.nav__el:hover{
+    background-color: #004e7a;
+    color: white;
+    cursor: pointer;
+}
+.nav--tours{
+    height: 100%;
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.header__logo{
+    display: flex;
+}
+.nav--user{
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+    flex-basis: 0;
 }
 
 .heading-secondary{
