@@ -72,6 +72,7 @@ export const login = catchAsync(async (req, res, next) => {
 export const protect = catchAsync(async (req, res, next) => {
   let token
 
+  // 1. Assign Token to authorization headers, if not assign it to cookies.
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
@@ -87,10 +88,10 @@ export const protect = catchAsync(async (req, res, next) => {
     )
   }
 
-  // 2 verification token
+  // 2. verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT)
 
-  // 3 check if user still exists
+  // 3. check if user still exists
   const currentUser = await User.findById(decoded.id)
   if (!currentUser) {
     return next(
@@ -98,7 +99,7 @@ export const protect = catchAsync(async (req, res, next) => {
     )
   }
 
-  // 4 check if user changed password after the token was issued
+  // 4. check if user changed password after the token was issued
   if (currentUser.changedPasswordAfter(decoded.iat)) {
     return next(
       new AppError('User recently changed password! Please log in again.', 401)
@@ -110,24 +111,29 @@ export const protect = catchAsync(async (req, res, next) => {
   next()
 })
 
-// Only for rendered pages, no errors
 export const isLoggedIn = catchAsync(async (req, res, next) => {
+  // 1. Verify Token
   if (req.cookies.jwt) {
-    const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET)
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT
+    )
 
+    // 2. Check if user still exists
     const currentUser = await User.findById(decoded.id)
     if (!currentUser) {
       return next()
     }
 
+    // 3. Check if user changed password after the token was issued
     if (currentUser.changedPasswordAfter(decoded.iat)) {
       return next()
     }
 
-    req.user = currentUser
-    res.user = currentUser
-    next()
+    //  4. There is a loggin user, asign it to res.locals
+    res.locals.user = currentUser
   }
+  next()
 })
 
 export const restrictTo = (...roles) => {
