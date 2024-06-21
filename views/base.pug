@@ -7,10 +7,14 @@ html
       link(rel='stylesheet' href='/css/style.css')
 
       title Moonvalleytours | #{title}
-
+    
+  body 
+    // HEADER
+    include _header
+    
     // CONTENT
     block content
-      h1 This is a placeholder heading
+    h1 Dashboard moonvalley
 
     script(src='/js/login.js')
     script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
