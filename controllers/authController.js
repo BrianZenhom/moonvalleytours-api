@@ -132,6 +132,7 @@ export const isLoggedIn = catchAsync(async (req, res, next) => {
 
     //  4. There is a loggin user, asign it to res.locals
     res.locals.user = currentUser
+    return next()
   }
   next()
 })
