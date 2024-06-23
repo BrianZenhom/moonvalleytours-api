@@ -72,6 +72,7 @@ main{
     max-width: 90px;
     height: 100%;
     transition: .2s ease;
+    padding: 0 5px;
 }
 
 .nav__el:hover{
@@ -102,7 +103,7 @@ main{
     margin-right: 5px;
 }
 .nav__el--user{
-    padding: 0 5px;
+    padding: 0 10px;
 }
 
 .heading-secondary{
@@ -235,7 +236,6 @@ main{
     cursor: pointer;
 
 }
-
 
 form:valid [type="submit"]{
     background-color: #0197ee;
