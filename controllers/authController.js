@@ -1,4 +1,4 @@
-import crypto from 'node:crypto'
+import crypto from 'crypto'
 import { promisify } from 'util'
 import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
