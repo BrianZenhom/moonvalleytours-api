@@ -1,261 +1,288 @@
 :root {
+  --background-color: rgb(243, 243, 243);
+  --accent-color: rgb(1, 151, 238);
+  --valid: rgb(1, 151, 238);
+  --invalid: rgb(193, 41, 46);
+  --focus: #004e7a;
+  --blur: rgb(132, 117, 119);
+  --hover: rgb(1, 22, 56);
+  --warning: rgb(255, 255, 199);
 
-    --background-color: #f3f3f3;
-    --border-size: 2px;
-    --accent-color: #0197ee;
-    --valid: #0197ee;
-    --invalid: crimson;
-    --focus: #004e7a;
-    --blur: #cccbcb;
-    --padding: 0.675rem;
-    --hover: #18aaff;
+  --padding: 0.675rem;
+  --border-size: 2px;
 
-   --base: hsl(var(--tint, 214) 80% 27% / calc(var(--alpha, 4) * 1%));
+  --base: hsl(var(--tint, 214) 80% 27% / calc(var(--alpha, 4) * 1%));
   /**
     * Use relative syntax to get to: hsl(221 25% 22% / 40%)
   */
   --shade: hsl(from var(--base) calc(h + 8) 25 calc(l - 5));
-  --perfect-shadow:
-    0 0 0 1px var(--base),
-    0 1px 1px -0.5px var(--shade),
-    0 3px 3px -1.5px var(--shade),
-    0 6px 6px -3px var(--shade),
-    0 12px 12px -6px var(--base),
-    0 24px 24px -12px var(--base);
+  --perfect-shadow: 0 0 0 1px var(--base), 0 1px 1px -0.5px var(--shade),
+    0 3px 3px -1.5px var(--shade), 0 6px 6px -3px var(--shade),
+    0 12px 12px -6px var(--base), 0 24px 24px -12px var(--base);
 }
 
-body{
-    font-family: Onest;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
-    text-decoration: none;
-    list-style: none;
-    box-sizing: border-box;
-    padding: 0;
-    background-color: rgba(245, 245, 255, 0.904);
+body {
+  font-family: Onest;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+  padding: 0;
+  background-color: rgba(245, 245, 255, 0.904);
 }
 
-main{
-    height: 60vh;   
-    display: grid;
-    place-items: center;
+main {
+  height: 60vh;
+  display: grid;
+  place-items: center;
 }
 
-.header{
-     background-color: var(--accent-color);
-     width: 100%;
-     display: flex;
-     justify-content: center;
+.header {
+  background-color: var(--accent-color);
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.nav{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-   
-    width: 1080px;
-    height: 80px;
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 1080px;
+  height: 80px;
 }
-.img{
-    opacity: .65;
+.img {
+  opacity: 0.65;
 }
-.nav__el{
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 80px;
-    max-width: 90px;
-    height: 100%;
-    transition: .2s ease;
-    padding: 0 5px;
+.nav__el {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 80px;
+  max-width: 90px;
+  height: 100%;
+  transition: 0.2s ease;
+  padding: 0 5px;
 }
 
-.nav__el:hover{
-    background-color: #004e7a;
-    color: white;
-    cursor: pointer;
+.nav__el:hover {
+  background-color: #004e7a;
+  color: white;
+  cursor: pointer;
 }
-.nav--tours{
-    height: 100%;
-    flex-grow: 1;
-    flex-basis: 0;
-}
-
-.header__logo{
-    display: flex;
-}
-.nav--user{
-    display: flex;
-    justify-content: flex-end;
-    flex-grow: 1;
-    flex-basis: 0;
-}
-.nav__user-img{
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 5px;
-}
-.nav__el--user{
-    padding: 0 10px;
+.nav--tours {
+  height: 100%;
+  flex-grow: 1;
+  flex-basis: 0;
 }
 
-.heading-secondary{
-    margin-bottom: 1rem;
+.header__logo {
+  display: flex;
+}
+.nav--user {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+.nav__user-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.nav__el--user {
+  padding: 0 10px;
 }
 
-.login-form{
-    min-width: 300px;
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    box-shadow: var(--perfect-shadow);
-    background-color: rgb(255, 255, 255);
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+.heading-secondary {
+  margin-bottom: 1rem;
 }
 
-.form__group{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    margin-bottom: 2rem;
-    position: relative;
+.login-form {
+  min-width: 300px;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--perfect-shadow);
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-::placeholder{
-    color: transparent;
+.form__group {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-bottom: 2rem;
+  position: relative;
 }
 
-.form__group:has(:invalid) input{
-    outline: 1.5px solid var(--invalid);
+::placeholder {
+  color: transparent;
 }
 
-.form__group:has(:invalid) label{
-    top: -20px;
-    left: 0px;
-    font-size: 12px;
-    color: var(--invalid);
+.form__group:has(:invalid) input {
+  outline: 1.5px solid var(--invalid);
 }
 
-.form__group:has(:invalid:not(:focus)){
-    animation: shake .8s;
+.form__group:has(:invalid) label {
+  top: -20px;
+  left: 0px;
+  font-size: 12px;
+  color: var(--invalid);
 }
 
-.form__group:has(:focus) input{
-    outline: 1.5px solid var(--focus);
-    background-color: white;
+.form__group:has(:invalid:not(:focus)) {
+  animation: shake 0.8s;
+}
+
+.form__group:has(:focus) input {
+  outline: 1.5px solid var(--focus);
+  background-color: white;
 }
 
 .form__group:focus input {
-    outline-offset: 5px;
+  outline-offset: 5px;
 }
 
-.form__group:has(:valid) input{
-    outline: 1.5px solid var(--valid);
+.form__group:has(:valid) input {
+  outline: 1.5px solid var(--valid);
 }
 
-.form__group:has(:valid) label{
-    top: -20px;
-    left: 0px;
-    font-size: 12px;
-    color: var(--accent-color);
+.form__group:has(:valid) label {
+  top: -20px;
+  left: 0px;
+  font-size: 12px;
+  color: var(--accent-color);
 }
 
-.form__group:has(:placeholder-shown) input{
-    outline: 1.5px solid var(--blur);
+.form__group:has(:placeholder-shown) input {
+  outline: 1.5px solid var(--blur);
 }
 .form__group:has(:placeholder-shown:not(:focus)) {
-    animation: none;
+  animation: none;
 }
 
-.form__group label{
-    position: absolute;
-    font-size: 12px;
-    color: #727272;
-    cursor: text;
-    transition: 0.2s ease all;
-    -moz-transition: 0.2s ease all;
-    -webkit-transition: 0.2s ease all;
-    user-select: none;
+.form__group label {
+  position: absolute;
+  font-size: 12px;
+  color: #727272;
+  cursor: text;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+  user-select: none;
 }
 
-.form__group:has(:placeholder-shown) label{
-    font-size: 16px;
+.form__group:has(:placeholder-shown) label {
+  font-size: 16px;
 }
 
-.form__group:has(:focus) label{
-    top: -20px;
-    left: 0px;
-    font-size: 12px;
+.form__group:has(:focus) label {
+  top: -20px;
+  left: 0px;
+  font-size: 12px;
 }
 
-.form__group:has(:placeholder-shown:not(:focus)) label{
-    top: 13px;
-    left: 10px;
+.form__group:has(:placeholder-shown:not(:focus)) label {
+  top: 13px;
+  left: 10px;
 }
 
-
-.form__button{
-    display: flex;
-    flex-direction: column;
-    padding-top: 1.5rem;
+.form__button {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1.5rem;
 }
 
-.form__input{
-    outline: none;
-    border: none;
-    padding: calc(var(--padding)* 1.25) 1rem;
-    outline: 1.5px solid var(--color);
-    background-color: var(--background-color);
-    border-radius: 8px;
-    overflow: hidden;
-    font-size: 16px;
-    font-family: Onest;
+.form__input {
+  outline: none;
+  border: none;
+  padding: calc(var(--padding) * 1.25) 1rem;
+  outline: 1.5px solid var(--color);
+  background-color: var(--background-color);
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 16px;
+  font-family: Onest;
 }
 
-
-.btn--main{
-    position: relative;
-    padding: calc(var(--padding)* 1.25) 1rem;
-    border-radius: 8px;
-    border: none;
-    outline: 1.5px solid hsl(175, 10%, 70%);
-    z-index: 1;
-    color: hsl(175, 10%, 70%);
-    overflow: hidden;
-    font-weight: 500;
-    font-size: 18px;
-    transition: .3s cubic-bezier(0.39, 0.575, 0.565, 1);
-    cursor: pointer;
-
+.btn--main {
+  position: relative;
+  padding: calc(var(--padding) * 1.25) 1rem;
+  border-radius: 8px;
+  border: none;
+  outline: 1.5px solid hsl(175, 10%, 70%);
+  z-index: 1;
+  color: hsl(175, 10%, 70%);
+  overflow: hidden;
+  font-weight: 500;
+  font-size: 18px;
+  transition: 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+  cursor: pointer;
 }
 
-form:valid [type="submit"]{
-    background-color: #0197ee;
-    color: white;
-    outline-color: transparent;
-}
-form:valid [type="submit"]:hover{
-    background-color: var(--hover);
-    color: white;
-    outline-color: transparent;
+form:valid [type='submit'] {
+  background-color: #0197ee;
+  color: white;
+  outline-color: transparent;
 }
 
-@keyframes shake{
-    0%, 100% {
-        transform: translateX(0);
-    } 
-    20%, 40%, 60%, 80%{
-        transform: translateX(-1%);
-    }
-    10%,30%,50%,70%, 90%{
-        transform: translateX(1%);
-    }
+form:valid [type='submit']:hover {
+  background-color: var(--hover);
+  color: white;
+  outline-color: transparent;
+}
+
+.alert {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: 9999;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 1rem 15rem;
+  box-shadow: var(--perfect-shadow);
+}
+.alert--success {
+  background-color: var(--warning);
+  color: var(--hover);
+}
+.alert--error {
+  background-color: var(--invalid);
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(-1%);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(1%);
+  }
 }
