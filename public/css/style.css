@@ -33,7 +33,7 @@ body {
   list-style: none;
   box-sizing: border-box;
   padding: 0;
-  background-color: rgba(245, 245, 255, 0.904);
+  background-color: var(--background-color);
 }
 
 main {
@@ -70,13 +70,27 @@ main {
   height: 100%;
   transition: 0.2s ease;
   padding: 0 5px;
+  position: relative;
+}
+.nav__el::before{
+  content: '';
+  position: absolute;
+  height: 0;
+  width: 100%;
+  bottom: 0;
+  background-color: var(--background-color);
+  transition: .2s ease;
+  transform-origin: right;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.nav__el:hover::before{
+  height: 25px;
+}
+.nav__el:hover{
+  color: white;
 }
 
-.nav__el:hover {
-  background-color: #004e7a;
-  color: white;
-  cursor: pointer;
-}
 .nav--tours {
   height: 100%;
   flex-grow: 1;
@@ -266,6 +280,40 @@ form:valid [type='submit']:hover {
 .alert--error {
   background-color: var(--invalid);
 }
+
+/* Error */
+.error{
+  display: flex;
+  flex-direction: column;
+}
+.error__title{
+  display: flex;
+  gap: 1rem;
+  align-items: start;
+}
+.heading-secondary--error{
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--invalid);
+}
+.error__emoji{
+  width: 60px;
+  object-fit: cover;
+}
+.error__msg{
+  padding-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: start;
+  font-size: 32px;
+}
+.errcode__heading{
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--invalid);
+}
+
 
 @keyframes shake {
   0%,
