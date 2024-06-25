@@ -1,0 +1,11 @@
+extends base
+
+
+block content
+    main.error__page
+        .error 
+            .error__title 
+                span.heading-secondary.heading-secondary--error Uh oh! the page you're looking for doesn't exist
+                img.error__emoji(src='/img/crying-face_1f622.png')
+            .error__msg= msg
+                span.errcode__heading= errcode
