@@ -2,6 +2,7 @@ import express from 'express'
 import {
   forgotPassword,
   login,
+  logout,
   protect,
   register,
   resetPassword,
@@ -13,6 +14,7 @@ router.patch('/updateMyPassword', protect, updatePassword)
 
 router.post('/register', register)
 router.post('/login', login)
+router.get('/logout', logout)
 
 router.post('/forgotPassword', forgotPassword)
 router.patch('/resetPassword/:token', resetPassword)
