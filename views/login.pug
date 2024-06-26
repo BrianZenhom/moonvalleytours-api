@@ -11,6 +11,8 @@ block content
         .form__group
           input#password.form__input(title="Must be at least 8 characters" pattern="[a-zA-Z0-9!@]{8,}" type='password', placeholder='At least 8 characters', required, minlength='8')
           label.form__label(for='password') Password
-        small remember me
+        label
+          small remember me
+            input(type='checkbox')
         .form__button
           button.btn.btn--main(type="submit") Login
