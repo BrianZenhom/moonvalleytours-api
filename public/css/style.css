@@ -27,13 +27,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 3rem;
   text-decoration: none;
   list-style: none;
   box-sizing: border-box;
   padding: 0;
+  height: 100vh;
   background-color: var(--background-color);
+  border: 2.5rem solid white;
 }
 
 main {
@@ -68,9 +68,11 @@ main {
   min-width: 80px;
   max-width: 90px;
   height: 100%;
-  transition: 0.2s ease;
+  transition: 0.3s cubic-bezier(.05,.82,.67,.37);
   padding: 0 5px;
   position: relative;
+  color: var(--hover);
+  cursor: pointer;
 }
 .nav__el::before{
   content: '';
@@ -83,9 +85,10 @@ main {
   transform-origin: right;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  box-shadow: var(--perfect-shadow);
 }
 .nav__el:hover::before{
-  height: 25px;
+  height: 5px;
 }
 .nav__el:hover{
   color: white;
@@ -215,7 +218,12 @@ main {
 .form__button {
   display: flex;
   flex-direction: column;
-  padding-top: 1.5rem;
+  padding-top: .5rem;
+}
+
+small{
+  display: flex;align-items: center;
+  cursor: pointer;
 }
 
 .form__input {
@@ -294,7 +302,7 @@ form:valid [type='submit']:hover {
 .heading-secondary--error{
   font-size: 42px;
   font-weight: 800;
-  color: var(--invalid);
+  color: var(--hover);
 }
 .error__emoji{
   width: 60px;
@@ -307,11 +315,17 @@ form:valid [type='submit']:hover {
   align-items: center;
   justify-content: start;
   font-size: 32px;
+  color: white;
 }
 .errcode__heading{
   font-size: 32px;
   font-weight: 800;
-  color: var(--invalid);
+  color: var(--hover);
+}
+.error__page{
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-color);
 }
 
 
