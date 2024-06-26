@@ -62,7 +62,7 @@ export const login = catchAsync(async (req, res, next) => {
   if (!req.body.email || !req.body.password) { return next(new AppError('Please provide email and password', 400)) }
 
   const user = await User.findOne({ email: req.body.email }).select('+password')
-  if (!user) return next(new AppError('User not found!', 404))
+  if (!user) return next(new AppError('Email not found!', 404))
 
   if (!user || !(await user.correctPassword(req.body.password, user.password))) { return next(new AppError('Invalid email or password!', 401)) }
 
