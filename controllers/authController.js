@@ -140,6 +140,7 @@ export const isLoggedIn = async (req, res, next) => {
       }
 
       //  4. There is a loggin user, asign it to res.locals
+      req.user = currentUser
       res.locals.user = currentUser
       return next()
     } catch (err) {
