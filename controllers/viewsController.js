@@ -39,4 +39,5 @@ export const getAccount = (req, res) => {
 }
 
 export const updateUserData = (req, res, next) => {
+  console.log('Update user', req.body)
 }
