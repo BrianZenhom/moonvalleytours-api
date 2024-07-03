@@ -36,7 +36,8 @@ const UserSchema = new mongoose.Schema(
     name: { type: String, required: [true, 'Please tell us your name!'] },
     surname: { type: String, required: [true, 'Please tell us your surname'] },
     phone: { type: Number },
-    nationality: { type: String, required: true },
+    country: { type: String, required: true },
+    city: { type: String, required: true },
     isAdmin: { type: Boolean, default: false, select: false },
     role: {
       type: String,
