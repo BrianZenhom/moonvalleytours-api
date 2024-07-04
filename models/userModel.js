@@ -35,7 +35,7 @@ const UserSchema = new mongoose.Schema(
     photo: { type: String },
     name: { type: String, required: [true, 'Please tell us your name!'] },
     surname: { type: String, required: [true, 'Please tell us your surname'] },
-    phone: { type: Number },
+    phone: { type: String },
     country: { type: String, required: true },
     city: { type: String, required: true },
     isAdmin: { type: Boolean, default: false, select: false },
