@@ -27,7 +27,9 @@ export const updateMe = catchAsync(async (req, res, next) => {
     'name',
     'surname',
     'email',
-    'nationality'
+    'country',
+    'city',
+    'instagram'
   )
 
   // Update user document
