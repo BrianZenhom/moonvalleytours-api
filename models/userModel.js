@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema(
     photo: { type: String },
     name: { type: String, required: [true, 'Please tell us your name!'] },
     surname: { type: String, required: [true, 'Please tell us your surname'] },
+    instagram: { type: String },
     phone: { type: String },
     country: { type: String, required: true },
     city: { type: String, required: true },
