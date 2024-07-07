@@ -1,5 +1,4 @@
 import { login, logout } from './login'
-import { UpdateUser } from './updateSettings'
 
 // DOM ELEMENTS
 const loginForm = document.querySelector('.form')
