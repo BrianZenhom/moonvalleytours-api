@@ -44,17 +44,18 @@ export const updatePassword = catchAsync(async (req, res, next) => {
   // Get user from db
   const user = await User.findById(req.user.id).select('+password')
 
-  // Check if password is correct
+  // 2) Check if POSTed current password is correct
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
     return next(new AppError('Your current password is wrong.', 401))
   }
 
-  // If its correct, update password
+  // 3) If so, update password
   user.password = req.body.password
   user.passwordConfirm = req.body.passwordConfirm
-
   await user.save()
-  // Log user in, send JWT
+  // User.findByIdAndUpdate will NOT work as intended!
+
+  // 4) Log user in, send JWT
   createSendToken(user, 200, res)
 })
 
