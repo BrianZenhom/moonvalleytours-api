@@ -12,8 +12,8 @@ import { protect, restrictTo } from '../controllers/authController.js'
 
 const router = express.Router()
 
-router.patch('/updateMe', updateMe)
 router.use(protect)
+router.patch('/updateMe', updateMe)
 router.get('/me', getMe, getUser)
 router.delete('/deleteMe', deleteMe)
 
