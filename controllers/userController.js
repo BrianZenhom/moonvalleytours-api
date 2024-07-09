@@ -18,6 +18,8 @@ export const getMe = (req, res, next) => {
 }
 
 export const updateMe = catchAsync(async (req, res, next) => {
+  console.log(req.file)
+  console.log(req.body)
   // Create an error if an user tries to update password.
   if (req.body.password || req.body.passwordConfirm) { return next(new AppError('Wrong route, use update my password', 400)) }
 
