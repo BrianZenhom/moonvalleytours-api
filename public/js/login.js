@@ -31,7 +31,7 @@ export const logout = async () => {
       url: 'http://localhost:1234/api/v1/auth/logout'
     })
 
-    if(res.data.status == 'success') location.reload(true)
+    if(res.data.status == 'success') location.replace('/login')
   } catch (err) {
     console.log(err.response)
     showAlert('error', 'Error logging out! Try again')
