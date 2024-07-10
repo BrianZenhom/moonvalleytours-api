@@ -6,18 +6,16 @@ import {
   deleteUser,
   updateMe,
   deleteMe,
-  getMe
+  getMe,
+  uploadUserPhoto
 } from '../controllers/userController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
-import multer from 'multer'
-
-const upload = multer({ dest: 'public/img/users' })
 
 const router = express.Router()
 
 router.use(protect)
 router.get('/me', getMe, getUser)
-router.patch('/updateMe', upload.single('photo'), updateMe)
+router.patch('/updateMe', uploadUserPhoto, updateMe)
 router.delete('/deleteMe', deleteMe)
 
 router.use(restrictTo('admin'))
