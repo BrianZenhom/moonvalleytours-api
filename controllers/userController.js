@@ -1,7 +1,35 @@
 import Users from '../models/userModel.js'
 import AppError from '../utils/appError.js'
 import catchAsync from '../utils/catchAsync.js'
+import multer from 'multer'
 import { deleteOne, getAll, getOne, updateOne } from './handlerFactory.js'
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/img/users')
+  },
+  filename: (req, file, cb) => {
+    // user-:id-:currtimestamp.jpg
+    const ext = file.mimetype.split('/')[1]
+    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`)
+  }
+
+})
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true)
+  } else {
+    cb(new AppError('Not an image! please choose correct file type.', 400), false)
+  }
+}
+
+export const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter
+})
+
+export const uploadUserPhoto = upload.single('photo')
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {}
@@ -18,8 +46,6 @@ export const getMe = (req, res, next) => {
 }
 
 export const updateMe = catchAsync(async (req, res, next) => {
-  console.log(req.file)
-  console.log(req.body)
   // Create an error if an user tries to update password.
   if (req.body.password || req.body.passwordConfirm) { return next(new AppError('Wrong route, use update my password', 400)) }
 
@@ -33,6 +59,7 @@ export const updateMe = catchAsync(async (req, res, next) => {
     'city',
     'instagram'
   )
+  if (req.file) filteredBody.photo = req.file.filename
 
   // Update user document
   const updatedUser = await Users.findByIdAndUpdate(req.user.id, filteredBody, {
