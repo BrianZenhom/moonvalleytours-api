@@ -7,7 +7,8 @@ import {
   updateMe,
   deleteMe,
   getMe,
-  uploadUserPhoto
+  uploadUserPhoto,
+  resizeUserPhoto
 } from '../controllers/userController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 
@@ -15,7 +16,7 @@ const router = express.Router()
 
 router.use(protect)
 router.get('/me', getMe, getUser)
-router.patch('/updateMe', uploadUserPhoto, updateMe)
+router.patch('/updateMe', uploadUserPhoto, resizeUserPhoto, updateMe)
 router.delete('/deleteMe', deleteMe)
 
 router.use(restrictTo('admin'))
