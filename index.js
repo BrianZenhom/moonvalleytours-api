@@ -22,6 +22,7 @@ import AppError from './utils/appError.js'
 import globalErrorHandler from './controllers/errorController.js'
 
 import 'dotenv/config'
+import { protect } from './controllers/authController.js'
 
 process.on('uncaughtException', err => {
   console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...')
@@ -95,8 +96,8 @@ app.use((req, res, next) => {
   req.requestTime = new Date().toISOString()
   next()
 })
-
 app.use('/', viewRoutes)
+app.use('/public', protect, express.static(path.join(__dirname, 'public')))
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/users', usersRoute)
 app.use('/api/v1/tours', toursRoute)
