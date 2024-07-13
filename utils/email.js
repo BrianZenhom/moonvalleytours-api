@@ -12,7 +12,7 @@ const sendEmail = async options => {
   })
   // Define the email options
   const mailOptions = {
-    from: 'Moon Valley Tours <noreply@moonvalleytours.com>',
+    from: `Moon Valley Tours ${process.env.NOREPLYEMAIL}`,
     to: options.email,
     subject: options.subject,
     text: options.message
