@@ -3,6 +3,29 @@ import City from '../models/cityModel.js'
 import catchAsync from '../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
 import { deleteOne, getAll, getOne, updateOne } from './handlerFactory.js'
+import multer from 'multer'
+import sharp from 'sharp'
+
+const multerStorage = multer.memoryStorage()
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true)
+  } else {
+    cb(new AppError('Not an image! please choose correct file type.', 400), false)
+  }
+}
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter
+})
+
+export const uploadTourPhotos = upload.fields([{
+  name: 'tourThumbnail', maxCount: 1
+}, {
+  name: 'tourPhotos', maxCount: 5
+}])
 
 export const setCityCountryIds = (req, res, next) => {
   // Allow nested routes
