@@ -10,7 +10,9 @@ import {
   createTour,
   setCityCountryIds,
   getToursWithin,
-  getDistances
+  getDistances,
+  uploadResizeTourPhotos,
+  uploadTourPhotos
 } from '../controllers/tourController.js'
 import { protect, restrictTo } from '../controllers/authController.js'
 import reviewRouter from './reviewRoutes.js'
@@ -40,7 +42,7 @@ router.get('/', getAllTour).post(protect, restrictTo('admin'), createTour)
 router
   .route('/:id')
   .get(getTour)
-  .patch(protect, restrictTo('admin', 'lead-guide'), updateTour)
+  .patch(protect, uploadTourPhotos, uploadResizeTourPhotos, restrictTo('admin', 'lead-guide'), updateTour)
 
 router
   .post(
