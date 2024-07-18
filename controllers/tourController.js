@@ -27,6 +27,37 @@ export const uploadTourPhotos = upload.fields([{
   name: 'tourPhotos', maxCount: 5
 }])
 
+export const uploadResizeTourPhotos = catchAsync(async (req, res, next) => {
+  if (!req.files.tourPhotos || !req.files.tourThumbnail) return next()
+
+  // 1) thumbail image
+  req.body.tourThumbnail = `tour-${req.params.id}-${Date.now()}-thumbnail.jpeg`
+  await sharp(req.files.tourThumbnail[0].buffer)
+    .resize(349, 360)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/tours/${req.body.tourThumbnail}`)
+
+  // 2) tour photos
+  req.body.tourPhotos = []
+
+  await Promise.all(
+    req.files.tourPhotos.map(async (file, i) => {
+      const filename = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`
+
+      await sharp(file.buffer)
+        .resize(2000, 1333)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/tours/${filename}`)
+
+      req.body.tourPhotos.push(filename)
+    })
+  )
+
+  next()
+})
+
 export const setCityCountryIds = (req, res, next) => {
   // Allow nested routes
   if (!req.body.city) req.body.city = req.params.cityId
