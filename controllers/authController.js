@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
 import catchAsync from './../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
-import sendEmail from '../utils/email.js'
+import Email from '../utils/email.js'
 
 const signToken = id => {
   return jwt.sign({ id }, process.env.JWT, {
@@ -36,6 +36,10 @@ const createSendToken = (user, statusCode, res) => {
 
 export const register = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body)
+
+  const url = `${req.protocol}://${req.get('host')}/customers/my-account`
+  console.log(url)
+  await new Email(newUser, url).sendWelcome()
 
   createSendToken(newUser, 201, res)
 })
@@ -173,17 +177,12 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false })
 
   // send it back as an email
-  const resetURL = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/auth/resetPassword/${resetToken}`
-
-  const message = `Forgot your password? Create a new password here: ${resetURL}\nIf you didn't request a new password, please ignore this email.`
   try {
-    await sendEmail({
-      email: user.email,
-      subject: 'Forgot password reset (valid for 10 min)',
-      message
-    })
+    const resetURL = `${req.protocol}://${req.get(
+      'host'
+    )}/api/v1/auth/resetPassword/${resetToken}`
+
+    await new Email(user, resetURL).sendPasswordReset()
 
     res.status(200).json({
       status: 'success',

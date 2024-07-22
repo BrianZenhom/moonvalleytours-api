@@ -50,6 +50,8 @@ mongoose.connection.on('disconnected', () => {
   console.log('mongo disconnected!')
 })
 
+app.disable('x-powered-by')
+
 // Set cors
 app.use(cors({
   origin: 'http://localhost:5173',

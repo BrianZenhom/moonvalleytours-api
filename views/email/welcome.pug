@@ -1,0 +1,41 @@
+extends baseEmail
+
+block content
+    body
+    table.table-container
+      tr
+        td
+          table.email-content
+            tr
+              td.header
+                img(src="https://res.cloudinary.com/brianzenhom/image/upload/c_fill,w_1000/v1721670506/MoonValleyLogo_e987ij.png" data-imagetype="External" alt="Logo")
+            tr
+              td.subtitle
+                p #{firstName}, activate your account
+            tr
+              td.text-content-left
+                p Hello #{firstName}
+                p Thank you for registering in the Moon Valley Tours client area. 
+                    strong Confirm your registration
+                    span  by clicking on the following link
+            tr
+              td.button-block
+                a(href="https://example.com" target="_blank") Activate your account
+            tr 
+              td.services 
+
+            tr
+              td.footer
+                | <strong>Best Regards,</strong>
+                br
+                | Moon Valley Tours
+                br
+                br
+                .divider
+                | Follow us on social media:
+                br
+                .social-links
+                  a(href="https://facebook.com/moonvalleytours" target="_blank")
+                    img(src="https://smartsaas.mailerloop.com/public/frontend/images/facebook2x.png" alt="Facebook")
+                  a(href="https://instagram.com/moonvalleytours" target="_blank")
+                    img(src="https://smartsaas.mailerloop.com/public/frontend/images/instagram2x.png" alt="Instagram")
