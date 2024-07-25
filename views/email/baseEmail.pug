@@ -7,34 +7,17 @@ html
 
         include _style
     body
-        table.body(role='presentation', border='0', cellpadding='0', cellspacing='0')
-            tbody
-                tr
-                    td
-                    td.container
-                        .content
-                            // START CENTERED WHITE CONTAINER
-                            table.main(role='presentation')
+        // CONTENT
+        block content
 
-                                // START MAIN AREA
-                                tbody
-                                    tr
-                                        td.wrapper
-                                            table(role='presentation', border='0', cellpadding='0', cellspacing='0')
-                                                tbody
-                                                    tr
-                                                        td
-                                                            // CONTENT
-                                                            block content
-
-                            // START FOOTER
-                            .footer
-                                table(role='presentation', border='0', cellpadding='0', cellspacing='0')
-                                    tbody
-                                        tr
-                                            td.content-block
-                                                span.apple-link Moon Valley Yours, Address Here
-                                                br
-                                                |  Don't like these emails? 
-                                                a(href='#') Unsubscribe
-                    //- td  
+// START FOOTER
+.footer
+    table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+        tbody
+            tr
+                td.content-block
+                    | Moon Valley Yours, Address Here
+                    br
+                    | Don't like these emails?
+                    a(href='#') Unsubscribe
+//- td  
