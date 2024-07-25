@@ -20,30 +20,28 @@ export default class Email {
       return 1
     }
 
-    // return nodemailer.createTransport({
-    //   host: 'sandbox.smtp.mailtrap.io',
-    //   port: 2525,
-    //   auth: {
-    //     user: '40ebea76c7597a',
-    //     pass: 'bf3c2f564d0971'
-    //   }
-    // })
     return nodemailer.createTransport({
-      host: process.env.NOREPLYHOST,
-      port: process.env.NOREPLYPORT,
+      host: 'sandbox.smtp.mailtrap.io',
+      port: 2525,
       auth: {
-        user: process.env.NOREPLYEMAIL,
-        pass: process.env.NOREPLYPW
+        user: '40ebea76c7597a',
+        pass: 'bf3c2f564d0971'
       }
     })
+    // return nodemailer.createTransport({
+    //   host: process.env.NOREPLYHOST,
+    //   port: process.env.NOREPLYPORT,
+    //   auth: {
+    //     user: process.env.NOREPLYEMAIL,
+    //     pass: process.env.NOREPLYPW
+    //   }
+    // })
   }
 
   async send (template, subject) {
     // 1 render html based on a pug template
     const __filename = fileURLToPath(import.meta.url)
     const __dirname = path.dirname(__filename)
-
-    console.log(__dirname)
 
     const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
       firstName: this.firstName,
