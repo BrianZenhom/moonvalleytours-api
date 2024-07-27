@@ -16,16 +16,24 @@ export default class Email {
 
   newTransport () {
     if (process.env.NODE_ENV === 'production') {
-      // Sendgrid
-      return 1
+      return nodemailer.createTransport({
+        host: process.env.DELIVERY_HOST,
+        port: process.env.DELIVERY_PORT,
+        secure: false,
+        auth: {
+          user: process.env.DELIVERY_USER,
+          pass: process.env.DELIVERY_PASS
+        }
+      })
     }
 
+    console.log('Failed')
     return nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      port: 2525,
+      host: process.env.NOREPLYHOST,
+      port: process.env.NOREPLYPORT,
       auth: {
-        user: '40ebea76c7597a',
-        pass: 'bf3c2f564d0971'
+        user: process.env.NOREPLYEMAIL,
+        pass: process.env.NOREPLYPW
       }
     })
     // return nodemailer.createTransport({
