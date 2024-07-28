@@ -27,7 +27,6 @@ export default class Email {
       })
     }
 
-    console.log('Failed')
     return nodemailer.createTransport({
       host: process.env.NOREPLYHOST,
       port: process.env.NOREPLYPORT,
@@ -36,14 +35,6 @@ export default class Email {
         pass: process.env.NOREPLYPW
       }
     })
-    // return nodemailer.createTransport({
-    //   host: process.env.NOREPLYHOST,
-    //   port: process.env.NOREPLYPORT,
-    //   auth: {
-    //     user: process.env.NOREPLYEMAIL,
-    //     pass: process.env.NOREPLYPW
-    //   }
-    // })
   }
 
   async send (template, subject) {
