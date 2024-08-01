@@ -13,6 +13,7 @@ import countriesRoute from './routes/countriesRoutes.js'
 import toursRoute from './routes/toursRoutes.js'
 import usersRoute from './routes/usersRoutes.js'
 import reviewRoutes from './routes/reviewRoutes.js'
+import bookingRoutes from './routes/bookingRoutes.js'
 import viewRoutes from './routes/viewRoutes.js'
 
 import cookieParser from 'cookie-parser'
@@ -106,6 +107,7 @@ app.use('/api/v1/tours', toursRoute)
 app.use('/api/v1/cities', citiesRoute)
 app.use('/api/v1/countries', countriesRoute)
 app.use('/api/v1/reviews', reviewRoutes)
+app.use('/api/v1/bookings', bookingRoutes)
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404))
