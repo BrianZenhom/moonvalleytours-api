@@ -47,6 +47,7 @@ const TourSchema = new mongoose.Schema(
       }
     },
     desc: { type: String },
+    shortDesc: { type: String },
     duration: { type: Number, required: [true, 'A tour must have a duration'] },
     difficulty: {
       type: String,
