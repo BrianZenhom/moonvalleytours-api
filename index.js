@@ -22,8 +22,10 @@ import cors from 'cors'
 import AppError from './utils/appError.js'
 import globalErrorHandler from './controllers/errorController.js'
 
-import 'dotenv/config'
+import dotenv from 'dotenv/config'
 import { protect } from './controllers/authController.js'
+
+dotenv.config({ path: '/etc/app.env' })
 
 process.on('uncaughtException', err => {
   console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...')
@@ -54,19 +56,21 @@ mongoose.connection.on('disconnected', () => {
 app.disable('x-powered-by')
 
 // Set cors
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
-}))
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+)
 
 // // Limit Request from same IP
 const limiter = rateLimit({
   validate: {
-    xForwardedForHeader: false
+    xForwardedForHeader: false,
   },
   max: 200,
   windowMs: 60 * 60 * 1000,
-  message: 'Too many requests, please try again later!'
+  message: 'Too many requests, please try again later!',
 })
 app.use('/api', limiter)
 
@@ -90,8 +94,8 @@ app.use(
       'ratingsQuantity',
       'ratingsAverage',
       'difficulty',
-      'price'
-    ]
+      'price',
+    ],
   })
 )
 
