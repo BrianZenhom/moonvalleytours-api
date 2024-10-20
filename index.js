@@ -22,7 +22,7 @@ import cors from 'cors'
 import AppError from './utils/appError.js'
 import globalErrorHandler from './controllers/errorController.js'
 
-import dotenv from 'dotenv/config'
+import dotenv from 'dotenv'
 import { protect } from './controllers/authController.js'
 
 dotenv.config({ path: '/etc/app.env' })
